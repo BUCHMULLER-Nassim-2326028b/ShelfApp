@@ -503,7 +503,8 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
   const removeFromCollection = useCallback(async (releaseId: number): Promise<boolean> => {
     if (isSupabaseConfigured) {
       try {
-        const user = supabaseUser ?? (await supabase.auth.getUser()).data.user;
+        const sessionResult = await supabase.auth.getSession();
+        const user = sessionResult.data.session?.user ?? null;
         if (!user) {
           console.error('Cannot remove item from Supabase: no authenticated user');
           return false;
@@ -716,7 +717,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
       }
       return { success: false, error: frenchMsg };
     }
-    setSupabaseUser(data.user);
+    setSupabaseUser(data.session?.user ?? null);
     return { success: true };
   }, []);
 
@@ -737,7 +738,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
       }
       return { success: false, error: frenchMsg };
     }
-    setSupabaseUser(data.user);
+    setSupabaseUser(data.session?.user ?? null);
     const needConfirmation = !data.session && Boolean(data.user);
     return { success: true, needConfirmation };
   }, []);

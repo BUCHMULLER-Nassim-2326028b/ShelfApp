@@ -501,21 +501,31 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
 
   // Remove an item from collection
   const removeFromCollection = useCallback(async (releaseId: number) => {
+    if (isSupabaseConfigured && supabaseUser) {
+      try {
+        const { error } = await supabase
+          .from('collection_items')
+          .delete()
+          .eq('user_id', supabaseUser.id)
+          .eq('release_id', releaseId);
+
+        if (error) {
+          console.error('Failed to remove item from Supabase:', error);
+          return;
+        }
+      } catch (error) {
+        console.error('Failed to remove item from Supabase:', error);
+        return;
+      }
+    }
+
     setCollection((prev) => prev.filter((i) => i.release_id !== releaseId));
     if (selectedItem?.release_id === releaseId) {
       setSelectedItem(null);
     }
 
-    // Clean up local cover
+    // Clean up local cover after the cloud deletion succeeds.
     await deleteLocalCover(releaseId);
-
-    if (isSupabaseConfigured && supabaseUser) {
-      await supabase
-        .from('collection_items')
-        .delete()
-        .eq('user_id', supabaseUser.id)
-        .eq('release_id', releaseId);
-    }
   }, [selectedItem, supabaseUser]);
 
   // Clear all items from the collection

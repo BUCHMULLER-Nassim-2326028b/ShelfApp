@@ -43,8 +43,6 @@ interface ShelfContextType {
   signInWithEmail: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   signUpWithEmail: (email: string, password: string) => Promise<{ success: boolean; error?: string; needConfirmation?: boolean }>;
   signOutSupabase: () => Promise<void>;
-  isCloudSyncing: boolean;
-  syncCollectionWithCloud: () => Promise<void>;
 
   // Search
   searchQuery: string;
@@ -120,7 +118,6 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
   // Supabase Auth State
   const [supabaseUser, setSupabaseUser] = useState<User | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [isCloudSyncing, setIsCloudSyncing] = useState(false);
 
   // Refs to prevent circular sync loops and duplicate DB writes
   const collectionRef = useRef<NormalizedMediaItem[]>(collection);
@@ -259,8 +256,6 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
 
     if (isSyncingRef.current) return;
     isSyncingRef.current = true;
-    setIsCloudSyncing(true);
-
     try {
       // 1. Fetch remote rows from Supabase (oldest first)
       const { data: remoteRows, error } = await supabase
@@ -333,7 +328,6 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
     } catch (err) {
       console.warn('Erreur de synchronisation cloud:', err);
     } finally {
-      setIsCloudSyncing(false);
       isSyncingRef.current = false;
     }
   }, [supabaseUser?.id]);
@@ -769,8 +763,6 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
         signInWithEmail,
         signUpWithEmail,
         signOutSupabase,
-        isCloudSyncing,
-        syncCollectionWithCloud: () => syncCollectionWithCloud(),
         searchQuery,
         setSearchQuery,
         searchResults,

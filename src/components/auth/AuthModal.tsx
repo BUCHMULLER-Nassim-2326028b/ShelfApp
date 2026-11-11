@@ -11,7 +11,6 @@ import {
   Loader2,
   AlertCircle,
   CheckCircle2,
-  RefreshCw,
   LogOut,
 } from 'lucide-react';
 import './AuthModal.css';
@@ -24,8 +23,6 @@ export const AuthModal: React.FC = () => {
     signInWithEmail,
     signUpWithEmail,
     signOutSupabase,
-    syncCollectionWithCloud,
-    isCloudSyncing,
   } = useShelf();
 
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
@@ -34,7 +31,6 @@ export const AuthModal: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [syncSuccess, setSyncSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -191,7 +187,7 @@ export const AuthModal: React.FC = () => {
           <div className="auth-sheet-handle" />
           <div className="auth-sheet-title-row">
             <h2 className="auth-sheet-title">
-              {supabaseUser ? 'Compte ShelfApp' : 'Compte et cloud'}
+              {supabaseUser ? 'Compte iShelf' : 'Compte et cloud'}
             </h2>
             <button
               type="button"
@@ -210,7 +206,7 @@ export const AuthModal: React.FC = () => {
             // Logged in state
             <>
               <p className="auth-subtitle">
-                Vous êtes connecté à votre compte ShelfApp :
+                Vous êtes connecté à votre compte iShelf :
               </p>
 
               <div className="auth-user-card">
@@ -248,27 +244,6 @@ export const AuthModal: React.FC = () => {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '4px' }}>
-                <button
-                  type="button"
-                  className="auth-submit-btn"
-                  onClick={async () => {
-                    if (!isCloudSyncing) {
-                      await syncCollectionWithCloud();
-                      setSyncSuccess(true);
-                      setTimeout(() => setSyncSuccess(false), 2500);
-                    }
-                  }}
-                >
-                  <RefreshCw size={17} className={isCloudSyncing ? 'spin-animation' : ''} />
-                  <span>
-                    {isCloudSyncing
-                      ? 'Synchronisation en cours...'
-                      : syncSuccess
-                      ? 'Collection synchronisée'
-                      : 'Synchroniser la collection'}
-                  </span>
-                </button>
-
                 <button
                   type="button"
                   className="auth-destructive-btn"

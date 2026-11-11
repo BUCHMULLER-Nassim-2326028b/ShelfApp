@@ -4,7 +4,7 @@ import {
   Disc,
   Layers,
   Trash2,
-  Sparkles,
+  BookOpen,
   ChevronRight,
   Smartphone,
   Loader2,
@@ -13,8 +13,6 @@ import {
   LayoutGrid,
   Info,
   Cloud,
-  CloudOff,
-  RefreshCw,
 } from 'lucide-react';
 import { startDiscogsOAuth } from '../lib/discogsOAuth';
 import '../styles/ios-settings.css';
@@ -35,14 +33,10 @@ export default function OptionsPage() {
     setRealisticSpineEnabled,
     supabaseUser,
     setIsAuthModalOpen,
-    signOutSupabase,
-    isCloudSyncing,
-    syncCollectionWithCloud,
   } = useShelf();
 
   const [isOAuthLoading, setIsOAuthLoading] = useState(false);
   const [oauthError, setOauthError] = useState<string | null>(null);
-  const [syncSuccess, setSyncSuccess] = useState(false);
 
   const handleOAuthConnect = async () => {
     setIsOAuthLoading(true);
@@ -80,8 +74,7 @@ export default function OptionsPage() {
         <h1 className="ios-settings-title">Réglages</h1>
       </header>
 
-      {/* ── Section: Compte ShelfApp Cloud ── */}
-      <h3 className="ios-settings-group-title">Compte et cloud</h3>
+      {/* ── Section: Compte iShelf Cloud ── */}
       <div className="ios-settings-group" style={{ marginBottom: '8px' }}>
         {supabaseUser ? (
           <>
@@ -103,8 +96,9 @@ export default function OptionsPage() {
                   style={{
                     width: '46px',
                     height: '46px',
-                    background: 'linear-gradient(135deg, #ffb038, #d18a28)',
-                    color: '#140d02',
+                    background: '#2c2c2e',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    color: '#ffffff',
                     fontWeight: 700,
                     fontSize: '18px',
                     borderRadius: '50%',
@@ -112,7 +106,6 @@ export default function OptionsPage() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0,
-                    boxShadow: '0 4px 12px rgba(255, 176, 56, 0.3)',
                   }}
                 >
                   {supabaseUser.email?.charAt(0).toUpperCase() || 'U'}
@@ -139,57 +132,6 @@ export default function OptionsPage() {
               <ChevronRight size={16} className="ios-chevron" style={{ color: '#8e8e93' }} />
             </div>
 
-            <div
-              className="ios-settings-row"
-              onClick={async () => {
-                if (!isCloudSyncing) {
-                  await syncCollectionWithCloud();
-                  setSyncSuccess(true);
-                  setTimeout(() => setSyncSuccess(false), 2500);
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="ios-row-left">
-                <div className="ios-badge" style={{ background: '#ffb038', color: '#140d02' }}>
-                  <RefreshCw size={17} className={isCloudSyncing ? 'spin-animation' : ''} />
-                </div>
-                <div className="ios-row-label-wrap">
-                  <span className="ios-row-label">
-                    {isCloudSyncing
-                      ? 'Synchronisation en cours...'
-                      : syncSuccess
-                      ? 'Collection synchronisée'
-                      : 'Synchroniser la collection'}
-                  </span>
-                  <span className="ios-row-sublabel">Sauvegarde vos disques sur le cloud</span>
-                </div>
-              </div>
-              <ChevronRight size={14} className="ios-chevron" />
-            </div>
-
-            <div
-              className="ios-settings-row"
-              onClick={async () => {
-                if (window.confirm('Voulez-vous vraiment vous déconnecter de votre compte ShelfApp ?')) {
-                  await signOutSupabase();
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="ios-row-left">
-                <div className="ios-badge ios-badge--red">
-                  <CloudOff size={17} />
-                </div>
-                <span className="ios-row-label" style={{ color: '#ff453a' }}>
-                  Se déconnecter
-                </span>
-              </div>
-            </div>
           </>
         ) : (
           <div
@@ -425,7 +367,7 @@ export default function OptionsPage() {
         <div className="ios-settings-row" onClick={() => setIsOnboardingOpen(true)} role="button" tabIndex={0}>
           <div className="ios-row-left">
             <div className="ios-badge ios-badge--purple">
-              <Sparkles size={17} />
+              <BookOpen size={17} />
             </div>
             <span className="ios-row-label">Revoir le guide d'accueil</span>
           </div>

@@ -277,7 +277,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
       const uniqueRemoteRows: any[] = [];
 
       if (remoteRows) {
-        for (const row of remoteRows) {
+        for (const row of remoteRows as any[]) {
           const relId = Number(row.release_id);
           if (seenReleaseIds.has(relId)) {
             duplicateRowIdsToDelete.push(row.id);

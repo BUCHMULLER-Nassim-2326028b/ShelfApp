@@ -251,7 +251,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
     }
   }, [collection]);
 
-  // Cloud Sync method with automatic deduplication & guard against infinite loops
+  // Refresh from Supabase. The cloud is authoritative once a user is signed in.
   const syncCollectionWithCloud = useCallback(async (overrideUserId?: string) => {
     if (!isSupabaseConfigured) return;
     const targetUserId = overrideUserId || supabaseUser?.id;
@@ -271,7 +271,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
 
       if (error) throw error;
 
-      // 2. Identify duplicate rows in Supabase and purge them immediately
+      // Keep the oldest row when legacy duplicates exist.
       const seenReleaseIds = new Set<number>();
       const duplicateRowIdsToDelete: string[] = [];
       const uniqueRemoteRows: any[] = [];
@@ -290,32 +290,19 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
 
       if (duplicateRowIdsToDelete.length > 0) {
         console.warn(`[ShelfApp] Nettoyage de ${duplicateRowIdsToDelete.length} doublons dans Supabase...`);
-        await supabase
+        const { error: duplicateDeleteError } = await supabase
           .from('collection_items')
           .delete()
           .in('id', duplicateRowIdsToDelete);
+        if (duplicateDeleteError) throw duplicateDeleteError;
       }
 
-      // 3. Hydrate with local custom covers & sync bidirectional with Supabase
-      const localCovers = await getAllLocalCovers();
-
+      // 3. Map only remote rows. Never upload local rows during a refresh:
+      // doing so could resurrect an item deleted on another device.
       const mappedRemote: NormalizedMediaItem[] = uniqueRemoteRows.map((row: any) => {
         const releaseId = Number(row.release_id);
-        let customCover = localCovers[releaseId];
-
-        // If local storage didn't have it, but Supabase has a custom cover saved:
-        if (!customCover && row.cover_url_custom) {
-          customCover = row.cover_url_custom;
-          saveLocalCoverFromDataUrl(releaseId, customCover);
-        }
-
-        // If local storage has it, but Supabase doesn't have it recorded yet:
-        if (customCover && !row.cover_url_custom && targetUserId) {
-          (supabase.from('collection_items' as any) as any)
-            .update({ cover_url_custom: customCover, updated_at: new Date().toISOString() })
-            .eq('id', row.id)
-            .then(() => { })
-            .catch(() => { });
+        if (row.cover_url_custom) {
+          void saveLocalCoverFromDataUrl(releaseId, row.cover_url_custom);
         }
 
         return {
@@ -331,7 +318,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
           genres: row.genres || [],
           styles: row.styles || [],
           cover_url_official: row.cover_url_official,
-          cover_url_custom: customCover || undefined,
+          cover_url_custom: row.cover_url_custom || undefined,
           tracklist: row.tracklist || [],
           notes: row.notes || undefined,
           rating: row.rating || undefined,
@@ -340,46 +327,9 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
         };
       });
 
-      // 4. Check which items from local collection need to be uploaded to Supabase
-      const localItems = collectionRef.current;
-      const itemsToUpload: any[] = [];
-      const mergedList = [...mappedRemote];
-
-      for (const localItem of localItems) {
-        if (!seenReleaseIds.has(localItem.release_id)) {
-          seenReleaseIds.add(localItem.release_id);
-          mergedList.push(localItem);
-          itemsToUpload.push({
-            user_id: targetUserId,
-            release_id: localItem.release_id,
-            master_id: localItem.master_id || null,
-            title: localItem.title,
-            artist: localItem.artist,
-            year: localItem.year || null,
-            format: localItem.format,
-            format_details: localItem.format_details || [],
-            label: localItem.label || null,
-            catno: localItem.catno || null,
-            genres: localItem.genres || [],
-            styles: localItem.styles || [],
-            cover_url_official: localItem.cover_url_official || null,
-            cover_url_custom: localItem.cover_url_custom || localCovers[localItem.release_id] || null,
-            tracklist: localItem.tracklist || [],
-            notes: localItem.notes || null,
-            rating: localItem.rating || null,
-            shelf_section: localItem.shelf_section || localItem.format,
-            shelf_position: 0,
-          });
-        }
-      }
-
-      // Batch insert any local items missing in cloud
-      if (itemsToUpload.length > 0) {
-        await (supabase.from('collection_items' as any) as any).insert(itemsToUpload);
-      }
-
-      // 5. Update local state once with the clean deduplicated merged list
-      setCollection(mergedList);
+      // 4. Replace local state, so stale local data cannot overwrite the cloud.
+      collectionRef.current = mappedRemote;
+      setCollection(mappedRemote);
     } catch (err) {
       console.warn('Erreur de synchronisation cloud:', err);
     } finally {
@@ -387,6 +337,32 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
       isSyncingRef.current = false;
     }
   }, [supabaseUser?.id]);
+
+  // Keep every open device updated when another device changes the collection.
+  useEffect(() => {
+    const userId = supabaseUser?.id;
+    if (!isSupabaseConfigured || !userId) return;
+
+    const channel = supabase
+      .channel(`collection-items:${userId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'collection_items',
+          filter: `user_id=eq.${userId}`,
+        },
+        () => {
+          void syncCollectionWithCloud(userId);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [supabaseUser?.id, syncCollectionWithCloud]);
 
   // Listen to Supabase Auth State changes & initial session
   useEffect(() => {

@@ -100,6 +100,15 @@ VITE_SUPABASE_URL=https://your-project-id.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key-here
 ```
 
+For Vercel, add both variables in **Project Settings → Environment Variables** for
+Production (and Preview if used), then redeploy. The local `.env` file is not
+uploaded to Vercel.
+
+Collection changes are written to Supabase immediately. When signed in, Supabase
+is the source of truth and Realtime updates other open devices automatically;
+local collection data is never pushed during a refresh, so stale devices cannot
+resurrect deleted items.
+
 ### Run locally
 
 ```bash

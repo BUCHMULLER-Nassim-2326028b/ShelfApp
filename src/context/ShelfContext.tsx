@@ -501,16 +501,27 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
 
   // Remove an item from collection
   const removeFromCollection = useCallback(async (releaseId: number) => {
-    if (isSupabaseConfigured && supabaseUser) {
+    if (isSupabaseConfigured) {
       try {
-        const { error } = await supabase
+        const user = supabaseUser ?? (await supabase.auth.getUser()).data.user;
+        if (!user) {
+          console.error('Cannot remove item from Supabase: no authenticated user');
+          return;
+        }
+
+        const { data: deletedRows, error } = await supabase
           .from('collection_items')
           .delete()
-          .eq('user_id', supabaseUser.id)
-          .eq('release_id', releaseId);
+          .eq('user_id', user.id)
+          .eq('release_id', releaseId)
+          .select('id');
 
         if (error) {
           console.error('Failed to remove item from Supabase:', error);
+          return;
+        }
+        if (!deletedRows || deletedRows.length === 0) {
+          console.error(`No Supabase collection item matched release_id ${releaseId}`);
           return;
         }
       } catch (error) {
@@ -519,6 +530,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
+    collectionRef.current = collectionRef.current.filter((i) => i.release_id !== releaseId);
     setCollection((prev) => prev.filter((i) => i.release_id !== releaseId));
     if (selectedItem?.release_id === releaseId) {
       setSelectedItem(null);

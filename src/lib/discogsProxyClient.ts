@@ -401,6 +401,7 @@ export interface SearchOptions {
   genre?: string;
   page?: number;
   per_page?: number;
+  barcode?: string;
 }
 
 export async function searchDiscogs(
@@ -419,6 +420,7 @@ export async function searchDiscogs(
   if (options.format) params.format = options.format;
   if (options.year) params.year = options.year;
   if (options.genre) params.genre = options.genre;
+  if (options.barcode) params.barcode = options.barcode;
 
   return invokeDiscogsProxy<DiscogsSearchResponse>('/database/search', params);
 }

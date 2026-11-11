@@ -484,6 +484,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
             catno: item.catno || null,
             genres: item.genres || [],
             styles: item.styles || [],
+            cover_url_official: item.cover_url_official || null,
             cover_url_custom: item.cover_url_custom || null,
             tracklist: item.tracklist || [],
             notes: item.notes || null,
@@ -653,13 +654,11 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      let userId = 'local_user';
-      if (isSupabaseConfigured) {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user?.id) userId = user.id;
-      }
+      const searchOptions: SearchOptions = {};
+      if (formatOption) searchOptions.format = formatOption;
+      if (barcodeOption) searchOptions.barcode = barcodeOption;
 
-      const results = await searchDiscogs(query, formatOption, userId, barcodeOption);
+      const results = await searchDiscogs(query, searchOptions);
       setSearchResults(results.results);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Erreur de recherche Discogs.';
@@ -673,13 +672,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
   // Import from Discogs (detailed release or master)
   const importFromDiscogs = useCallback(
     async (id: number, type: 'release' | 'master' = 'release'): Promise<NormalizedMediaItem> => {
-      let userId = 'local_user';
-      if (isSupabaseConfigured) {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user?.id) userId = user.id;
-      }
-
-      const raw = await getDiscogsReleaseOrMaster(id, type, userId);
+      const raw = await getDiscogsReleaseOrMaster(id, type);
       const normalized = normalizeDiscogsRelease(raw);
       await addToCollection(normalized);
       return normalized;

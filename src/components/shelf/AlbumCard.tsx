@@ -33,8 +33,9 @@ export const AlbumCard: React.FC<AlbumCardProps> = ({ item, onClick }) => {
             alt={item.title}
             loading="lazy"
             onError={(e) => {
-              // Fallback to placeholder if external image fails
-              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop&q=80';
+              // Fallback to neutral placeholder if external image fails
+              (e.target as HTMLImageElement).src = '/images/shelf/shelf_bg_v2.png';
+              (e.target as HTMLImageElement).style.opacity = '0.3';
             }}
           />
           {/* Diagonal skeuomorphic gloss shine */}

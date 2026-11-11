@@ -392,7 +392,7 @@ export default function OptionsPage() {
             <span className="ios-row-label">Version</span>
           </div>
           <div className="ios-row-right">
-            <span className="ios-row-value">2.2.0 (SF Pro & Wood)</span>
+            <span className="ios-row-value">0.9.0b</span>
           </div>
         </div>
       </div>

@@ -30,7 +30,7 @@ interface ShelfContextType {
   setFilterSection: (filter: ShelfFilter) => void;
   isLoadingCollection: boolean;
   addToCollection: (item: NormalizedMediaItem) => Promise<void>;
-  removeFromCollection: (releaseId: number) => Promise<void>;
+  removeFromCollection: (releaseId: number) => Promise<boolean>;
   clearCollection: () => Promise<void>;
   updateItemNotesAndRating: (releaseId: number, notes: string, rating: number | null) => Promise<void>;
   uploadCustomCover: (releaseId: number, file: File) => Promise<string>;
@@ -500,33 +500,28 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
   }, [supabaseUser]);
 
   // Remove an item from collection
-  const removeFromCollection = useCallback(async (releaseId: number) => {
+  const removeFromCollection = useCallback(async (releaseId: number): Promise<boolean> => {
     if (isSupabaseConfigured) {
       try {
         const user = supabaseUser ?? (await supabase.auth.getUser()).data.user;
         if (!user) {
           console.error('Cannot remove item from Supabase: no authenticated user');
-          return;
+          return false;
         }
 
-        const { data: deletedRows, error } = await supabase
+        const { error } = await supabase
           .from('collection_items')
           .delete()
           .eq('user_id', user.id)
-          .eq('release_id', releaseId)
-          .select('id');
+          .eq('release_id', releaseId);
 
         if (error) {
           console.error('Failed to remove item from Supabase:', error);
-          return;
-        }
-        if (!deletedRows || deletedRows.length === 0) {
-          console.error(`No Supabase collection item matched release_id ${releaseId}`);
-          return;
+          return false;
         }
       } catch (error) {
         console.error('Failed to remove item from Supabase:', error);
-        return;
+        return false;
       }
     }
 
@@ -538,6 +533,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
 
     // Clean up local cover after the cloud deletion succeeds.
     await deleteLocalCover(releaseId);
+    return true;
   }, [selectedItem, supabaseUser]);
 
   // Clear all items from the collection

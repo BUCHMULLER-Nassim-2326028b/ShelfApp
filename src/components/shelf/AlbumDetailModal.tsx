@@ -64,7 +64,10 @@ export const AlbumDetailModal: React.FC = () => {
 
   const handleDelete = async () => {
     if (window.confirm(`Voulez-vous retirer "${selectedItem.title}" de votre collection ?`)) {
-      await removeFromCollection(selectedItem.release_id);
+      const removed = await removeFromCollection(selectedItem.release_id);
+      if (!removed) {
+        alert('La suppression Supabase a échoué. Vérifiez la console pour le détail.');
+      }
     }
   };
 

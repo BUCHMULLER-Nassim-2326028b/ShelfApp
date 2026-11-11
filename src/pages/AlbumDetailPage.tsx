@@ -66,6 +66,7 @@ export default function AlbumDetailPage({
 
   // Add to collection state
   const [isAdding, setIsAdding] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Prevent rubber-band pull-down at top of album detail to prevent revealing shelf underneath
   const containerRef = useRef<HTMLDivElement>(null);
@@ -119,7 +120,7 @@ export default function AlbumDetailPage({
 
   // Fetch full release details from Discogs if not already in collection
   useEffect(() => {
-    if (itemInCollection) return;
+    if (itemInCollection || isDeleting) return;
 
     let isMounted = true;
     async function fetchRelease() {
@@ -147,7 +148,7 @@ export default function AlbumDetailPage({
     return () => {
       isMounted = false;
     };
-  }, [cleanId, isMaster, itemInCollection]);
+  }, [cleanId, isMaster, itemInCollection, isDeleting]);
 
   const handleSaveNotes = async () => {
     if (!item) return;
@@ -210,8 +211,14 @@ export default function AlbumDetailPage({
   const handleDelete = async () => {
     if (!item) return;
     if (window.confirm(`Voulez-vous retirer "${item.title}" de votre collection ?`)) {
-      await removeFromCollection(item.release_id);
-      onBack();
+      setIsDeleting(true);
+      const removed = await removeFromCollection(item.release_id);
+      if (removed) {
+        onBack();
+      } else {
+        setIsDeleting(false);
+        alert('La suppression Supabase a échoué. Vérifiez la console pour le détail.');
+      }
     }
   };
 

@@ -1,0 +1,26 @@
+[
+  {
+    "version": "1.1",
+    "date": "Septembre 2026",
+    "title": "Nouveau Look & Améliorations",
+    "isLatest": true,
+    "changes": [
+      "Refonte graphique complète avec la DA originale GameMaker",
+      "Overlay Actualités plein écran avec défilement Instagram et indicateurs à points",
+      "Suppression du bouton MàJ obsolète au profit d'un Changelog dédié",
+      "Animation au survol avec zoom fluide sur les cartes et boutons",
+      "Ombres légères et épurées sans effet glow excessif"
+    ]
+  },
+  {
+    "version": "1.0",
+    "date": "Version Initiale",
+    "isLatest": false,
+    "changes": [
+      "Soundboard officielle avec les répliques cultes de Savun",
+      "Architecture React fluide et installable en PWA",
+      "Slots pour importer et enregistrer ses propres sons",
+      "Système de sons épinglés et statistiques des répliques les plus cliquées"
+    ]
+  }
+]

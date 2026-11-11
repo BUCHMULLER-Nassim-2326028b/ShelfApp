@@ -1,0 +1,234 @@
+/* ============================================
+   Floating Pill Bottom Navigation — Liquid Glass
+   ============================================ */
+
+.bottom-nav {
+  position: fixed;
+  /* On iOS, safe-area-inset-bottom is around 34px. By subtracting 0.75rem (~12px), we push it down closer to the home indicator. */
+  bottom: max(0.5rem, calc(env(safe-area-inset-bottom, 1rem) - 0.75rem));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-nav);
+  width: calc(100% - 2rem);
+  max-width: 24rem;
+  pointer-events: auto;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bottom-nav__inner {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  height: 4rem;
+  width: 13.8rem;
+  max-width: calc(100% - 4.75rem);
+  position: relative;
+  overflow: visible;
+
+  /* Frosted Glass Outer Shell — Apple Music style */
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.09) 0%,
+      rgba(255, 255, 255, 0.02) 100%), rgba(12, 16, 36, 0.38);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  border-radius: var(--radius-full);
+  border: 0.5px solid rgba(255, 255, 255, 0.10);
+  padding: 3px;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Nav bar styling when dragging / pressing */
+.bottom-nav__inner--pressed {
+  cursor: grabbing;
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 16px 44px rgba(0, 0, 0, 0.50),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24);
+}
+
+/* ============================================
+   Draggable Liquid Glass Capsule (Pill)
+   ============================================ */
+.bottom-nav__liquid-pill {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: calc((100% - 6px) / 2);
+  height: calc(100% - 6px);
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  z-index: 1;
+  transform-origin: center center;
+  will-change: transform;
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(16px);
+  transition: opacity 0.25s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Pressed / Dragging: Bubble expands smoothly, NO outline, NO specular */
+.bottom-nav__liquid-pill--pressed {
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.24);
+  border: none;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  filter: none;
+}
+
+/* ============================================
+   Navigation Tab Items
+   ============================================ */
+.bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 100%;
+  width: 100%;
+  border-radius: var(--radius-full);
+  color: rgba(255, 255, 255, 0.68);
+  position: relative;
+  z-index: 2;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.24s ease, transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bottom-nav__item--active,
+.bottom-nav__item--drag-candidate {
+  color: #ffb038;
+  transform: scale(1.04);
+}
+
+/* Zoomed element when pressed / held down — soft and organic */
+.bottom-nav__item--pressed {
+  transform: scale(1.15);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+}
+
+.bottom-nav__item--pressed .bottom-nav__icon-wrapper {
+  transform: translateY(-1.5px) scale(1.05);
+}
+
+.bottom-nav__icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), filter 0.28s ease;
+}
+
+.bottom-nav__label {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.22s ease;
+}
+
+.bottom-nav__item--active .bottom-nav__label,
+.bottom-nav__item--drag-candidate .bottom-nav__label {
+  color: #ffb038;
+}
+
+/* Desktop hover effect on items */
+@media (hover: hover) {
+  .bottom-nav__inner:not(.bottom-nav__inner--pressed) .bottom-nav__item:hover {
+    color: #ffffff;
+  }
+
+  .bottom-nav__inner:not(.bottom-nav__inner--pressed) .bottom-nav__item:hover .bottom-nav__icon-wrapper {
+    transform: translateY(-1px);
+  }
+}
+
+/* ============================================
+   Light Mode Theme for BottomNav
+   ============================================ */
+[data-theme='light'] .bottom-nav__inner {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 12px 34px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+}
+
+[data-theme='light'] .bottom-nav__liquid-pill {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='light'] .bottom-nav__liquid-pill--pressed {
+  background: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .bottom-nav__item {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+[data-theme='light'] .bottom-nav__item--active,
+[data-theme='light'] .bottom-nav__item--drag-candidate,
+[data-theme='light'] .bottom-nav__item--active .bottom-nav__label,
+[data-theme='light'] .bottom-nav__item--drag-candidate .bottom-nav__label {
+  color: #c97e16;
+}
+
+/* ============================================
+   Standalone Add Button (Circular Glass Bubble)
+   ============================================ */
+.bottom-nav__add-btn {
+  width: 4rem;
+  height: 4rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.09) 0%,
+      rgba(255, 255, 255, 0.02) 100%), rgba(12, 16, 36, 0.38);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, color 0.25s ease;
+}
+
+.bottom-nav__add-btn:active {
+  transform: scale(0.92);
+}
+
+.bottom-nav__add-btn--active {
+  color: #ffb038;
+}
+
+[data-theme='light'] .bottom-nav__add-btn {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 12px 34px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  color: rgba(0, 0, 0, 0.65);
+}
+
+[data-theme='light'] .bottom-nav__add-btn--active {
+  color: #c97e16;
+  border-color: rgba(201, 126, 22, 0.45);
+}

@@ -1,0 +1,264 @@
+/* ============================================
+   Home Page — GameMaker Aesthetic Faithful
+   ============================================ */
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  gap: 0.875rem;
+  /* 14px */
+}
+
+/* ---------- Clean Logo Image ---------- */
+.home-header {
+  text-align: center;
+  padding-top: 0;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.home-logo-img {
+  width: 100%;
+  max-width: 320px;
+  max-height: 52px;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ---------- Main ACTUS Card ---------- */
+.home-actus-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.home-actus-card {
+  width: 100%;
+  height: 155px;
+  border-radius: 14px;
+  border: 3px solid #ffffff;
+  background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 40%, #172554 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-actus-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.home-actus-card:active {
+  transform: scale(0.97);
+}
+
+.home-actus-text {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(5rem, 11vw, 3.8rem);
+  letter-spacing: 0.05em;
+  color: #3b82f6;
+  user-select: none;
+}
+
+/* Captions under cards */
+.home-card-caption {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.92rem;
+  color: #ffffff;
+  margin-top: 5px;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Version & Nouveautés Banner ---------- */
+.home-banner-section {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.home-nouveautes-banner {
+  width: 100%;
+  height: 72px;
+  border-radius: 14px;
+  border: 3px solid #ffffff;
+  background: #091332;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-nouveautes-banner:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.home-nouveautes-banner:active {
+  transform: scale(0.97);
+}
+
+.home-banner-avatar-wrap {
+  width: 105px;
+  height: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.home-banner-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.home-banner-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 12px;
+  padding-right: 16px;
+  gap: 1px;
+}
+
+.home-banner-version {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.82rem;
+  color: #facc15;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.home-banner-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.35rem, 5vw, 1.75rem);
+  color: #ffffff;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+}
+
+/* ---------- Duo Cards (Pinned & Top Sound) ---------- */
+.home-duo-section {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.home-duo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.home-duo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.home-duo-card {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 20px;
+  border: 3px solid #ffffff;
+  background: linear-gradient(180deg, #1e3a8a 0%, #172554 45%, #0b1437 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: var(--space-md);
+  box-sizing: border-box;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-duo-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.home-duo-card:active {
+  transform: scale(0.96);
+}
+
+.home-duo-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-duo-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.home-duo-icon--active {
+  color: #38bdf8;
+}
+
+.home-duo-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #ffffff;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.home-duo-play {
+  color: #38bdf8;
+  margin-top: 2px;
+}
+
+.home-duo-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #facc15;
+  background: rgba(250, 204, 21, 0.15);
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(250, 204, 21, 0.3);
+}

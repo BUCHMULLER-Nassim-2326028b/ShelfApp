@@ -1,0 +1,207 @@
+/* ============================================
+   Micro-Animations
+   ============================================ */
+
+/* --- Page transitions --- */
+.page-enter {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 150ms ease-in, transform 150ms ease-in;
+}
+
+/* --- Sound button press --- */
+@keyframes soundPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--color-accent-glow);
+  }
+  50% {
+    transform: scale(0.92);
+    box-shadow: 0 0 0 8px transparent;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.sound-pulse {
+  animation: soundPulse 300ms ease-out;
+}
+
+/* --- Ripple effect --- */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+  animation: ripple 600ms ease-out forwards;
+}
+
+/* --- Slide up --- */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp var(--transition-base) ease-out both;
+}
+
+.slide-up-delay-1 { animation-delay: 50ms; }
+.slide-up-delay-2 { animation-delay: 100ms; }
+.slide-up-delay-3 { animation-delay: 150ms; }
+.slide-up-delay-4 { animation-delay: 200ms; }
+.slide-up-delay-5 { animation-delay: 250ms; }
+.slide-up-delay-6 { animation-delay: 300ms; }
+
+/* --- Scale in --- */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.scale-in {
+  animation: scaleIn var(--transition-base) ease-out both;
+}
+
+/* --- Fade in --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn var(--transition-base) ease-out both;
+}
+
+/* --- Shimmer loading --- */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    var(--color-surface-hover) 50%,
+    var(--color-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* --- Badge pulse --- */
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.badge-pulse {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* --- Sound playing indicator --- */
+@keyframes playingWave {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; }
+}
+
+.playing-indicator {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+
+.playing-indicator span {
+  width: 3px;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  animation: playingWave 0.8s ease-in-out infinite;
+}
+
+.playing-indicator span:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.playing-indicator span:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.playing-indicator span:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+/* --- Hover lift --- */
+.hover-lift {
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hover-lift:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

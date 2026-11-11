@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 344 510" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,800&amp;display=swap');
+      .skinny-title {
+        font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+        font-weight: 800;
+        font-style: italic;
+        text-transform: uppercase;
+      }
+    </style>
+    <linearGradient id="bg_custom" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4338ca"/>
+      <stop offset="60%" stop-color="#312e81"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="mic_glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="rgba(129, 140, 248, 0.4)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Top Graphic Area -->
+  <rect width="344" height="375" fill="url(#bg_custom)"/>
+  <rect width="344" height="375" fill="url(#mic_glow)"/>
+
+  <!-- Background decorative rings -->
+  <circle cx="172" cy="180" r="110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+  <circle cx="172" cy="180" r="75" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+
+  <!-- Custom Sound / Microphone / Plus Motif -->
+  <g transform="translate(172, 180)">
+    <rect x="-24" y="-55" width="48" height="75" rx="24" fill="#ffffff" filter="drop-shadow(0 6px 16px rgba(0,0,0,0.5))"/>
+    <path d="M-36,-10 C-36,30 36,30 36,-10" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+    <line x1="0" y1="28" x2="0" y2="55" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+    <line x1="-28" y1="55" x2="28" y2="55" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+    <!-- Plus Badge -->
+    <circle cx="28" cy="-35" r="18" fill="#38bdf8" stroke="#ffffff" stroke-width="3"/>
+    <line x1="28" y1="-43" x2="28" y2="-27" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+    <line x1="20" y1="-35" x2="36" y2="-35" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Bottom Dark Banner -->
+  <rect y="375" width="344" height="135" fill="#111827"/>
+  
+  <!-- Banner Title Text (Skinny Italic matching original) -->
+  <g transform="translate(172, 442)">
+    <text x="0" y="0" 
+          class="skinny-title"
+          font-size="48" 
+          letter-spacing="1.5" 
+          fill="#ffffff" 
+          text-anchor="middle"
+          filter="drop-shadow(0 2px 4px rgba(0,0,0,0.8))">
+      MES SONS
+    </text>
+  </g>
+</svg>

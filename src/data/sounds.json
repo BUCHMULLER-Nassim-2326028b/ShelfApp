@@ -1,0 +1,176 @@
+{
+  "categories": [
+    {
+      "id": "maskass",
+      "name": "Maskass",
+      "displayTitle": "MASKASS",
+      "size": "featured",
+      "icon": "ghost",
+      "image": "/images/categories/art_maskass.png",
+      "bannerColor": "rgba(140, 20, 30, 0.95)",
+      "color": "#d32f2f",
+      "bgGradient": [
+        "#ef5350",
+        "#f44336"
+      ],
+      "isNew": true,
+      "description": "La collection Maskass",
+      "sounds": [
+        {
+          "id": "maskass-cri",
+          "name": "Cri de Maskass",
+          "audio": "/sounds/maskass-cri.mp3",
+          "image": "/images/sounds/maskass.png"
+        },
+        {
+          "id": "maskass-surprise",
+          "name": "Surprise !",
+          "audio": "/sounds/maskass-surprise.mp3",
+          "image": "/images/sounds/maskass.png"
+        }
+      ]
+    },
+    {
+      "id": "base",
+      "name": "Sons de base",
+      "displayTitle": "SONS DE BASE",
+      "size": "normal",
+      "icon": "gamepad",
+      "image": "/images/categories/art_base.png",
+      "bannerColor": "#111827",
+      "color": "#1a3a8a",
+      "bgGradient": [
+        "#1a237e",
+        "#283593"
+      ],
+      "isNew": false,
+      "description": "Les classiques qui font le game",
+      "sounds": [
+        {
+          "id": "thwomp",
+          "name": "Thwomp",
+          "audio": "/sounds/thwomp.mp3",
+          "image": "/images/sounds/thwomp.png"
+        },
+        {
+          "id": "maskass",
+          "name": "Maskass",
+          "audio": "/sounds/maskass.mp3",
+          "image": "/images/sounds/maskass.png"
+        },
+        {
+          "id": "nemo",
+          "name": "Vous avez pas vu mon fils ?",
+          "audio": "/sounds/nemo.mp3",
+          "image": "/images/sounds/nemo.png"
+        },
+        {
+          "id": "poisson",
+          "name": "J'ai un poisson !",
+          "audio": "/sounds/poisson.mp3",
+          "image": "/images/sounds/poisson.png"
+        },
+        {
+          "id": "conduit",
+          "name": "Suivre le conduit",
+          "audio": "/sounds/conduit.mp3",
+          "image": "/images/sounds/conduit.png"
+        },
+        {
+          "id": "ohyessir",
+          "name": "Oh Yes Sir",
+          "audio": "/sounds/ohyessir.mp3",
+          "image": "/images/sounds/ohyessir.png"
+        }
+      ]
+    },
+    {
+      "id": "english",
+      "name": "Sons Anglais",
+      "displayTitle": "SONS ANGLAIS",
+      "size": "normal",
+      "icon": "globe",
+      "image": "/images/categories/art_anglais.png",
+      "bannerColor": "#111827",
+      "color": "#b71c1c",
+      "bgGradient": [
+        "#c62828",
+        "#e53935"
+      ],
+      "isNew": false,
+      "description": "The English collection",
+      "sounds": [
+        {
+          "id": "awesome",
+          "name": "Fucking Awesome",
+          "audio": "/sounds/awesome.mp3",
+          "image": "/images/sounds/awesome.png"
+        },
+        {
+          "id": "reference",
+          "name": "Is that a f*cking Savun reference ?!",
+          "audio": "/sounds/reference.mp3",
+          "image": "/images/sounds/reference.png"
+        },
+        {
+          "id": "vegan",
+          "name": "Vegan Friendly",
+          "audio": "/sounds/vegan.mp3",
+          "image": "/images/sounds/vegan.png"
+        },
+        {
+          "id": "goodshit",
+          "name": "Dat Some Good Shieet",
+          "audio": "/sounds/goodshit.mp3",
+          "image": "/images/sounds/goodshit.png"
+        },
+        {
+          "id": "delightful",
+          "name": "Delightful",
+          "audio": "/sounds/delightful.mp3",
+          "image": "/images/sounds/delightful.png"
+        },
+        {
+          "id": "crymore",
+          "name": "Cry More You Little B*tch",
+          "audio": "/sounds/crymore.mp3",
+          "image": "/images/sounds/crymore.png"
+        }
+      ]
+    },
+    {
+      "id": "all",
+      "name": "Tous les sons",
+      "displayTitle": "Voir tout",
+      "size": "petit",
+      "icon": "sparkles",
+      "image": "/images/categories/art_tous.svg",
+      "bannerColor": "#111827",
+      "color": "#1e3a8a",
+      "bgGradient": [
+        "#1e40af",
+        "#1e3a8a"
+      ],
+      "isNew": false,
+      "description": "Tous les sons réunis",
+      "sounds": []
+    },
+    {
+      "id": "custom",
+      "name": "Mes sons",
+      "displayTitle": "MES SONS",
+      "size": "petit",
+      "icon": "mic",
+      "image": "/images/categories/art_messons.svg",
+      "bannerColor": "#111827",
+      "color": "#4338ca",
+      "bgGradient": [
+        "#4f46e5",
+        "#3730a3"
+      ],
+      "isNew": false,
+      "description": "Mes sons personnalisés",
+      "sounds": []
+    }
+  ]
+}

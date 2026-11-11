@@ -1,0 +1,58 @@
+{
+  "version": "2.0.0",
+  "events": [
+    {
+      "id": "evt-001",
+      "cardTitle": "TEST",
+      "image": "/images/actus/actu_NewLookBrand_2509.png",
+      "gradient": "linear-gradient(160deg, #10b981 0%, #0d9488 30%, #0284c7 65%, #0a1128 100%)",
+      "animatedBackground": {
+        "type": "aurora",
+        "colors": ["#10b981", "#0284c7", "#0d9488", "#081329"]
+      },
+      "title": "Bienvenue !",
+      "description": "Un tout nouveau look a été donné à l'application, allez y jeter un oeil !",
+      "badge": "NOUVEAU",
+      "categoryLink": null,
+      "active": true
+    },
+    {
+      "id": "evt-002",
+      "cardTitle": "MASKASS",
+      "image": "/images/actus/actus_maskass.svg",
+      "gradient": "linear-gradient(160deg, #e11d48 0%, #be123c 40%, #4c0519 80%, #0a1128 100%)",
+      "animatedBackground": {
+        "type": "embers",
+        "colors": ["#e11d48", "#be123c", "#f59e0b", "#120308"]
+      },
+      "title": "Maskass débarque !",
+      "description": "La nouvelle catégorie Maskass est disponible avec tous ses sons iconiques !",
+      "badge": "NOUVEAU",
+      "categoryLink": "maskass",
+      "active": true
+    },
+    {
+      "id": "evt-003",
+      "cardTitle": "CUSTOM",
+      "image": "/images/actus/actus_custom.svg",
+      "gradient": "linear-gradient(160deg, #8b5cf6 0%, #6366f1 40%, #1e1b4b 80%, #0a1128 100%)",
+      "animatedBackground": {
+        "type": "mesh",
+        "colors": ["#8b5cf6", "#6366f1", "#ec4899", "#0b0819"]
+      },
+      "title": "Slots Personnalisés",
+      "description": "Importe et stocke tes propres répliques cultes directement dans la soundboard !",
+      "badge": "FEATURE",
+      "categoryLink": null,
+      "active": true
+    }
+  ],
+  "changelog": [
+    "🎨 Nouveau design fidèle au GameMaker original",
+    "📰 Overlay Actus plein écran avec cartes scrollables et indicateurs à points",
+    "📱 Support PWA complet et installable sur mobile",
+    "🔊 Catégorie Maskass ajoutée avec sons cultes",
+    "⚙️ Menu options avec contrôle du volume et vibrations",
+    "💾 Slots de sons personnalisés avec sauvegarde locale"
+  ]
+}

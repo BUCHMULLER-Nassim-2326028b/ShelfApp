@@ -1,0 +1,69 @@
+/* ============================================
+   Glass Card — Pure CSS Liquid Glass Effect
+   ============================================ */
+
+.glass-card {
+  position: relative;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+
+  /* Glass effect */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease;
+}
+
+/* Top specular highlight — gives the "liquid" look */
+.glass-card__highlight {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- Variants --- */
+.glass-card--default {
+  padding: var(--space-lg);
+}
+
+.glass-card--compact {
+  padding: var(--space-md);
+}
+
+.glass-card--flush {
+  padding: 0;
+}
+
+.glass-card--interactive {
+  cursor: pointer;
+  padding: var(--space-lg);
+}
+
+.glass-card--interactive:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.glass-card--interactive:active {
+  transform: scale(0.97);
+}

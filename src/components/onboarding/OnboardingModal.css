@@ -1,0 +1,315 @@
+/* ==============================================================================
+   iOS Fullscreen Onboarding (Setup Assistant Style)
+   ============================================================================== */
+
+.ios-onboarding-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Segoe UI", Roboto, sans-serif;
+  animation: onboardingFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes onboardingFadeIn {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Ambient glow in background */
+.ios-onboarding-ambient {
+  position: absolute;
+  top: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 176, 56, 0.12) 0%, rgba(255, 176, 56, 0) 70%);
+  pointer-events: none;
+  filter: blur(60px);
+}
+
+/* ── Top Bar with Skip ── */
+.ios-onboarding-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: calc(max(16px, env(safe-area-inset-top)) + var(--pwa-notch-blur-pad, 1.8rem)) 20px 8px 20px;
+  z-index: 10;
+  min-height: 44px;
+}
+
+.ios-onboarding-skip-link {
+  background: none;
+  border: none;
+  color: #8e8e93;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: all 0.15s ease;
+}
+
+.ios-onboarding-skip-link:hover,
+.ios-onboarding-skip-link:active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Sliding Content Area ── */
+.ios-onboarding-slides-container {
+  flex: 1;
+  display: flex;
+  width: 200%;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.ios-onboarding-slide {
+  width: 50%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 28px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.ios-onboarding-slide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Hero Artwork / Icon ── */
+.ios-onboarding-hero {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ios-onboarding-disc-wrapper {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center,
+    #ffb038 0%,
+    #ffb038 18%,
+    #111 19%,
+    #1f1f1f 23%,
+    #111 26%,
+    #181818 55%,
+    #0c0c0c 75%,
+    #000 100%);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 176, 56, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: slowVinylSpin 20s linear infinite;
+}
+
+@keyframes slowVinylSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.ios-onboarding-disc-center {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffb038;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #140d02;
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Titles ── */
+.ios-onboarding-title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.ios-onboarding-subtitle {
+  font-size: 15px;
+  color: #8e8e93;
+  margin: 0 0 28px 0;
+  text-align: center;
+  line-height: 1.45;
+  max-width: 330px;
+}
+
+/* ── Features List (Inset Grouped iOS 18 style) ── */
+.ios-onboarding-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+  margin-bottom: 24px;
+}
+
+.ios-onboarding-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: left;
+}
+
+.ios-onboarding-feature-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.ios-onboarding-feature-text {
+  flex: 1;
+}
+
+.ios-onboarding-feature-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 2px 0;
+  letter-spacing: -0.2px;
+}
+
+.ios-onboarding-feature-desc {
+  font-size: 13px;
+  color: #8e8e93;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ── Bottom Fixed Controls ── */
+.ios-onboarding-footer {
+  padding: 16px 24px calc(16px + env(safe-area-inset-bottom, 12px)) 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.75) 65%, rgba(0, 0, 0, 0) 100%);
+  z-index: 10;
+}
+
+/* ── Pagination Dots ── */
+.ios-onboarding-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.ios-onboarding-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: pointer;
+}
+
+.ios-onboarding-dot--active {
+  width: 22px;
+  background: #ffffff;
+}
+
+/* ── Buttons ── */
+.ios-onboarding-btn-primary {
+  width: 100%;
+  max-width: 360px;
+  height: 52px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: none;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.ios-onboarding-btn-primary:active {
+  background: rgba(255, 255, 255, 0.88);
+  transform: scale(0.98);
+}
+
+.ios-onboarding-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ios-onboarding-btn-subtle {
+  background: none;
+  border: none;
+  color: #8e8e93;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.ios-onboarding-btn-subtle:hover,
+.ios-onboarding-btn-subtle:active {
+  color: #d1d1d6;
+}
+
+/* ── Light Mode Support ── */
+[data-theme='light'] .ios-onboarding-fullscreen {
+  background-color: #f2f2f7;
+  color: #000000;
+}
+
+[data-theme='light'] .ios-onboarding-title {
+  color: #000000;
+}
+
+[data-theme='light'] .ios-onboarding-feature-title {
+  color: #000000;
+}
+
+[data-theme='light'] .ios-onboarding-btn-primary {
+  background: #000000;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='light'] .ios-onboarding-dot {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='light'] .ios-onboarding-dot--active {
+  background: #000000;
+}

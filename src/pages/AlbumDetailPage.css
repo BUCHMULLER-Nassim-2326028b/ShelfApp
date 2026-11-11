@@ -1,0 +1,534 @@
+/* ==============================================================================
+   Album Detail Page (Native iOS Stack Screen)
+   ============================================================================== */
+
+.album-detail-page {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100%;
+  padding-bottom: calc(100px + env(safe-area-inset-bottom, 20px));
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  overscroll-behavior-y: none;
+}
+
+/* ── Sticky Top Navigation Bar ── */
+.album-detail-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(max(14px, env(safe-area-inset-top)) + var(--pwa-notch-blur-pad, 1.8rem)) 16px 12px 16px;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.album-nav-back-btn {
+  background: none;
+  border: none;
+  color: #ffb038;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 6px 4px 0;
+  transition: opacity 0.15s ease;
+  margin-left: -6px;
+  flex-shrink: 0;
+}
+
+.album-nav-back-btn:active {
+  opacity: 0.6;
+}
+
+.album-nav-back-chevron {
+  color: #ffb038;
+  flex-shrink: 0;
+}
+
+.album-nav-back-label {
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+.album-nav-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  /* Dynamically clamped to viewport so it never overlaps the back button or action button */
+  max-width: calc(100% - 220px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  pointer-events: none;
+}
+
+.album-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 40px;
+  justify-content: flex-end;
+}
+
+.album-nav-delete-btn {
+  background: rgba(255, 69, 58, 0.15);
+  border: 1px solid rgba(255, 69, 58, 0.3);
+  color: #ff453a;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ── Loading & Error ── */
+.album-detail-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px;
+  gap: 16px;
+  color: #8e8e93;
+}
+
+.album-detail-error {
+  margin: 40px 16px;
+  padding: 20px;
+  background: rgba(255, 69, 58, 0.12);
+  border: 1px solid rgba(255, 69, 58, 0.3);
+  border-radius: 14px;
+  text-align: center;
+}
+
+.album-btn-retry {
+  margin-top: 12px;
+  background: #ffb038;
+  color: #140d02;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ── Content Body ── */
+.album-detail-body {
+  padding: 18px 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Hero Cover Section ── */
+.album-hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.album-cover-stage {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.album-cover-container {
+  width: 250px;
+  height: 250px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #141416;
+  position: relative;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(255, 255, 255, 0.08);
+  border: 0.5px solid rgba(255, 255, 255, 0.14);
+}
+
+.album-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.album-hero-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #27272a 0%, #18181b 100%);
+}
+
+.album-hero-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.album-photo-badge-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 6px 12px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s ease;
+}
+
+.album-photo-badge-btn:active {
+  transform: scale(0.94);
+}
+
+.album-custom-cover-tag {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #30d158;
+  font-weight: 600;
+}
+
+/* ── Title & Artist Block ── */
+.album-title-block {
+  width: 100%;
+}
+
+.album-main-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  line-height: 1.25;
+}
+
+.album-main-artist {
+  font-size: 17px;
+  font-weight: 500;
+  color: #aeaeb2;
+  margin: 0 0 14px 0;
+}
+
+.album-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.album-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #1c1c1e;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: #c7c7cc;
+}
+
+.album-badge-pill.format-pill {
+  background: #ffb038;
+  color: #140d02;
+  border-color: #ffb038;
+  font-weight: 700;
+}
+
+.album-formats-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.album-format-spec {
+  font-size: 12px;
+  font-style: italic;
+  color: #d1d1d6;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+.album-genres-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.album-genre-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8e8e93;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+/* ── Main Action Card ── */
+.album-action-card {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.album-in-shelf-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1c1c1e;
+  border: 1px solid rgba(48, 209, 88, 0.3);
+  border-radius: 24px;
+  padding: 14px 18px;
+}
+
+.album-in-shelf-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.album-in-shelf-left strong {
+  display: block;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.album-in-shelf-left span {
+  font-size: 12px;
+  color: #8e8e93;
+}
+
+.album-btn-remove-shelf {
+  background: rgba(255, 69, 58, 0.12);
+  border: 1px solid rgba(255, 69, 58, 0.3);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: #ff453a;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.album-btn-add-shelf {
+  width: 100%;
+  height: 50px;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.album-btn-add-shelf:active {
+  transform: scale(0.98);
+}
+
+/* ── Inset Grouped Section Block ── */
+.album-detail-group {
+  background-color: #1c1c1e;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+}
+
+.album-group-header {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #8e8e93;
+  padding: 14px 16px 8px 16px;
+  letter-spacing: -0.1px;
+}
+
+/* Rating Section */
+.album-rating-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+}
+
+.album-rating-label {
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.album-stars-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.album-star-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.album-star-btn:active {
+  transform: scale(1.25);
+}
+
+.album-rating-text {
+  margin-left: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffb038;
+}
+
+/* Notes Section */
+.album-notes-section {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.album-notes-textarea {
+  width: 100%;
+  background: #2c2c2e;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 12px 14px;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+}
+
+.album-notes-textarea:focus {
+  border-color: #ffb038;
+}
+
+.album-notes-save-btn {
+  align-self: flex-end;
+  background: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  color: #000000;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.15);
+}
+
+/* ── Full Tracklist Rows ── */
+.album-tracklist-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.album-track-row {
+  display: flex;
+  align-items: center;
+  padding: 11px 16px;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.06);
+  gap: 12px;
+}
+
+.album-track-pos {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffb038;
+  min-width: 24px;
+}
+
+.album-track-title {
+  flex: 1;
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.album-track-duration {
+  font-size: 12px;
+  color: #8e8e93;
+}
+
+/* ── External Link ── */
+.album-external-link-wrap {
+  margin: 16px 0 24px 0;
+  text-align: center;
+}
+
+.album-discogs-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #8e8e93;
+  font-size: 13px;
+  text-decoration: none;
+  padding: 8px 14px;
+  background: #1c1c1e;
+  border-radius: 20px;
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+}
+
+.album-discogs-link-btn:hover {
+  color: #ffb038;
+}
+
+.spin-animation {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+

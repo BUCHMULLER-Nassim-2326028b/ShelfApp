@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 344 510" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,800&amp;display=swap');
+      .skinny-title {
+        font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+        font-weight: 800;
+        font-style: italic;
+        text-transform: uppercase;
+      }
+    </style>
+    <linearGradient id="bg_all" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="60%" stop-color="#172554"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="star_glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="rgba(250, 204, 21, 0.35)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Top Graphic Area -->
+  <rect width="344" height="375" fill="url(#bg_all)"/>
+  <rect width="344" height="375" fill="url(#star_glow)"/>
+
+  <!-- Background decorative rings -->
+  <circle cx="172" cy="180" r="110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+  <circle cx="172" cy="180" r="75" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+
+  <!-- Golden Sound / Star / All Motif -->
+  <g transform="translate(172, 180)">
+    <polygon points="0,-70 20,-20 70,-20 30,15 45,65 0,35 -45,65 -30,15 -70,-20 -20,-20" 
+             fill="#facc15" 
+             stroke="#ca8a04" 
+             stroke-width="3"
+             filter="drop-shadow(0 6px 18px rgba(0,0,0,0.6))"/>
+    <path d="M-15,-12 L-5,-12 L8,-22 L8,22 L-5,12 L-15,12 Z" fill="#1e3a8a"/>
+    <path d="M14,-10 C18,-5 18,5 14,10" fill="none" stroke="#1e3a8a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M20,-18 C27,-8 27,8 20,18" fill="none" stroke="#1e3a8a" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Bottom Dark Banner -->
+  <rect y="375" width="344" height="135" fill="#111827"/>
+  
+  <!-- Banner Title Text (Skinny Italic matching original) -->
+  <g transform="translate(172, 422)">
+    <text x="0" y="0" 
+          class="skinny-title"
+          font-size="44" 
+          letter-spacing="1" 
+          fill="#ffffff" 
+          text-anchor="middle"
+          filter="drop-shadow(0 2px 4px rgba(0,0,0,0.8))">
+      TOUS LES
+    </text>
+    <text x="0" y="44" 
+          class="skinny-title"
+          font-size="44" 
+          letter-spacing="1" 
+          fill="#ffffff" 
+          text-anchor="middle"
+          filter="drop-shadow(0 2px 4px rgba(0,0,0,0.8))">
+      SONS
+    </text>
+  </g>
+</svg>

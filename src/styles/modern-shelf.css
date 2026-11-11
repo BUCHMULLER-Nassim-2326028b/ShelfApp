@@ -1,0 +1,330 @@
+/* ==============================================================================
+   Modern iOS Shelf (Apple Music Grid Aesthetic)
+   ============================================================================== */
+
+.modern-shelf-container {
+  min-height: 100vh;
+  padding-bottom: 110px;
+  background-color: var(--color-bg-primary, #000000);
+  color: var(--color-text-primary, #ffffff);
+  font-family: 'SF Pro', 'SF Pro Text', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Light mode background */
+[data-theme='light'] .modern-shelf-container {
+  background-color: #f2f2f7;
+  color: #000000;
+}
+
+/* Modern iOS Toolbar */
+.modern-shelf-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  padding-top: calc(max(10px, env(safe-area-inset-top)) + var(--pwa-notch-blur-pad, 1.8rem));
+  background: linear-gradient(to bottom,
+      #000000 0%,
+      #000000 calc(max(10px, env(safe-area-inset-top)) + 6px),
+      #18181b calc(max(10px, env(safe-area-inset-top)) + 24px),
+      #121214 100%);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+[data-theme='light'] .modern-shelf-toolbar {
+  background: rgba(247, 247, 248, 0.82);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.modern-toolbar-left,
+.modern-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Density pill button */
+.modern-density-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: var(--color-text-primary, #ffffff);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+[data-theme='light'] .modern-density-btn {
+  background: rgba(0, 0, 0, 0.06);
+  color: #000000;
+}
+
+.modern-density-btn:active {
+  transform: scale(0.96);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Modern iOS Segmented Control */
+.modern-segmented {
+  display: flex;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 3px;
+  border-radius: 9px;
+  gap: 2px;
+}
+
+[data-theme='light'] .modern-segmented {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.modern-segmented__tab {
+  padding: 5px 12px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.2, 0, 0, 1);
+  white-space: nowrap;
+}
+
+[data-theme='light'] .modern-segmented__tab {
+  color: #636366;
+}
+
+.modern-segmented__tab.active {
+  background: #ffffff;
+  color: #000000;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme='light'] .modern-segmented__tab.active {
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* Modern Add Button with honey amber accent */
+.modern-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 13px;
+  background: #ffb038;
+  color: #140d02;
+  border: none;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  box-shadow: 0 2px 8px rgba(255, 176, 56, 0.35);
+}
+
+.modern-add-btn:active {
+  transform: scale(0.96);
+  filter: brightness(0.92);
+}
+
+/* Modern Album Grid */
+.modern-grid-container {
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+
+.modern-grid-container--dense {
+  gap: 12px;
+  padding: 12px;
+}
+
+/* Modern Album Item Card */
+.modern-album-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+}
+
+.modern-album-card:active {
+  transform: scale(0.96);
+}
+
+.modern-cover-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #1a1a1e;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='light'] .modern-cover-wrap {
+  background-color: #e5e5ea;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  border: 0.5px solid rgba(0, 0, 0, 0.06);
+}
+
+.modern-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Modern gloss shine if realisticSpineEnabled is on */
+.modern-cover-gloss {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.04) 30%,
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+/* Subtle vinyl peek in modern view */
+.modern-vinyl-peek {
+  position: absolute;
+  top: 5%;
+  right: 0%;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  background: radial-gradient(circle at center,
+      #ffb038 0%,
+      #ffb038 18%,
+      #111 19%,
+      #1f1f1f 23%,
+      #111 26%,
+      #181818 55%,
+      #0c0c0c 75%,
+      #000 100%);
+  z-index: -1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateX(12px) rotate(8deg);
+}
+
+.modern-album-card:hover .modern-vinyl-peek,
+.modern-album-card:active .modern-vinyl-peek {
+  transform: translateX(20px) rotate(18deg);
+}
+
+/* Text Meta */
+.modern-card-meta {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.modern-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text-primary, #ffffff);
+}
+
+[data-theme='light'] .modern-card-title {
+  color: #000000;
+}
+
+.modern-card-artist {
+  font-size: 12px;
+  font-weight: 400;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme='light'] .modern-card-artist {
+  color: #636366;
+}
+
+.modern-card-badge {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 3px;
+  padding: 1px 5px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 4px;
+  background: rgba(255, 176, 56, 0.15);
+  color: #ffb038;
+  letter-spacing: 0.3px;
+}
+
+[data-theme='light'] .modern-card-badge {
+  background: rgba(212, 139, 30, 0.12);
+  color: #b8740c;
+}
+
+/* Empty State */
+.modern-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px;
+  gap: 16px;
+}
+
+.modern-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 176, 56, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffb038;
+}
+
+.modern-empty-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.modern-empty-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 280px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+[data-theme='light'] .modern-empty-desc {
+  color: #636366;
+}

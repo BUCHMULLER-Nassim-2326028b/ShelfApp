@@ -1,0 +1,167 @@
+/* ============================================
+   Sound List Page & Overlay Modal
+   ============================================ */
+
+/* The Stack Screen Container */
+.sound-list-screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(1, 12, 34, 0.92);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  padding: 0;
+}
+
+/* Legacy Modal Overlay fallback */
+.sound-list-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: rgba(1, 12, 34, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding-top: max(1.5rem, env(safe-area-inset-top, 2rem));
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 1rem));
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+/* Reset inner page padding since overlay handles it */
+.sound-list-overlay .sound-list-page {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.sound-list-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 27.5rem; /* 440px */
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Header with GameMaker RETOUR style */
+.sound-list-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  padding-top: var(--space-xs);
+}
+
+.sound-list-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 4px 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sound-list-back:hover {
+  transform: scale(1.05);
+}
+
+.sound-list-back:active {
+  transform: scale(0.95);
+}
+
+.sound-list-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.85rem;
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+}
+
+/* Grid */
+.sound-list-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+/* Custom slots section */
+.sound-list-custom-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.sound-list-custom-hint {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.45;
+  text-align: center;
+}
+
+.sound-list-slots-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+/* 404 state */
+.sound-list-404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  min-height: 50vh;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.sound-list-404 h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.sound-list-404__btn {
+  padding: var(--space-sm) var(--space-lg);
+  background: #2563eb;
+  color: white;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.sound-list-404__btn:hover {
+  transform: scale(1.04);
+}
+
+.sound-list-404__btn:active {
+  transform: scale(0.95);
+}

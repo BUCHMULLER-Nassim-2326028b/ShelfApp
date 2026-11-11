@@ -1,0 +1,32 @@
+/* ============================================
+   Sounds Page — Choix de la Catégorie
+   ============================================ */
+
+.sounds-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%;
+}
+
+.sounds-page .page-header {
+  margin-bottom: 0.85rem;
+}
+
+
+/* Top Featured Card Section */
+.sounds-featured-section {
+  width: 100%;
+}
+
+/* 2-Column Grid */
+.sounds-grid-section {
+  width: 100%;
+}
+
+.sounds-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}

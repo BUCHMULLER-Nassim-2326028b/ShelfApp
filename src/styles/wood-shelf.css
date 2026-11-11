@@ -1,0 +1,461 @@
+/* ==============================================================================
+   Vintage Skeuomorphic Wood Shelf Design System
+   Warm Honey Oak / Maple Bookcase
+   ============================================================================== */
+
+:root {
+  --wood-grain-primary: #c48b4f;
+  --wood-grain-secondary: #bb8043;
+  --wood-bg-base: #b37537;
+  --wood-shelf-top: #fae4c4;
+  --wood-shelf-front: #b0753a;
+  --wood-shelf-bottom: #63350d;
+  --wood-shadow: rgba(0, 0, 0, 0.6);
+}
+
+/* Shelf Page full container on desktop & mobile */
+.shelf-page {
+  position: relative;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  box-sizing: border-box !important;
+}
+
+/* Container for the whole wooden bookcase */
+.wood-bookcase {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-bottom: 100px;
+  background-color: #d19a58;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.wood-shelves-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+}
+
+/* Full-width continuous wood wall texture covering all horizontal space */
+.wood-bookcase-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/shelf/wood_bg.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Authentic left and right wooden cabinet side pillars */
+.wood-side-wall {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(14px, 3.63vw, 42px);
+  z-index: 2;
+  pointer-events: none;
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+}
+
+.wood-side-wall--left {
+  left: 0;
+  background-image: url('/images/shelf/side_wood_l.png');
+  background-position: left top;
+  box-shadow: inset -2px 0 6px rgba(0, 0, 0, 0.25);
+}
+
+.wood-side-wall--right {
+  right: 0;
+  background-image: url('/images/shelf/side_wood_r.png');
+  background-position: right top;
+  box-shadow: inset 2px 0 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Wood Bookcase Header / Toolbar (Vintage navigation style) */
+.wood-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  padding-top: calc(max(8px, env(safe-area-inset-top)) + var(--pwa-notch-blur-pad, 1.8rem));
+  background: linear-gradient(
+    to bottom,
+    #ba8146 0%,
+    #d8a065 calc(max(8px, env(safe-area-inset-top)) + 4px),
+    #ba8146 calc(max(8px, env(safe-area-inset-top)) + 26px),
+    #996229 100%
+  );
+  border-bottom: 1px solid #5a330e;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.45) inset,
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.wood-toolbar-left,
+.wood-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Skeuomorphic Glossy Buttons (Edit / Store / Add) */
+.ios-vintage-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 5px 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.7);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.08) 50%, rgba(0, 0, 0, 0.18) 51%, rgba(0, 0, 0, 0.38) 100%), #7e4d25;
+  border: 1px solid #4a270d;
+  border-radius: 5px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.4) inset,
+    0 1px 2px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+  user-select: none;
+}
+
+.ios-vintage-btn:active {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(255, 255, 255, 0.1) 100%), #502e14;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+  transform: translateY(1px);
+}
+
+.ios-vintage-btn--accent {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(0, 0, 0, 0.15) 51%, rgba(0, 0, 0, 0.35) 100%), #2b6cb0;
+  border-color: #1a365d;
+}
+
+/* Vintage Segmented Control (Tous / Vinyles / CDs / K7) */
+.ios-vintage-segmented {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #573210;
+  border-radius: 6px;
+  padding: 1px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5) inset,
+    0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.ios-vintage-segmented__tab {
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fae3c3;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ios-vintage-segmented__tab.active {
+  color: #fff;
+  background: linear-gradient(to bottom, #bd8349 0%, #7b451a 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Quick Grid Density Selector Button */
+.ios-grid-btn {
+  padding: 4px 7px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.28) 0%, rgba(0, 0, 0, 0.25) 100%), #6a3e1c;
+  border: 1px solid #3c1e08;
+  border-radius: 5px;
+  color: #fff;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+  cursor: pointer;
+}
+
+/* ============================================
+   Shelf Row: alcove block with pre-baked shelf
+   ============================================ */
+
+.wood-shelf-row {
+  position: relative;
+  width: 100%;
+  min-height: calc((100vw - 30px) / var(--shelf-columns, 3) + 60px);
+}
+
+/* Alcove block background — absolute, fills the entire row */
+.wood-row-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* bg fills the whole area, sits behind the borders */
+.wood-row-bg-fill {
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/shelf/shelf_bg_v2.png');
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+  background-position: left center;
+  z-index: 0;
+}
+
+/* Borders are on top, pinned to left/right edges of the row */
+.wood-row-border {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  aspect-ratio: 540 / 544;
+  background-image: url('/images/shelf/shelf_border_v2.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 2;
+}
+
+.wood-row-border--left {
+  left: -3px;
+}
+
+.wood-row-border--right {
+  right: -3px;
+  transform-origin: center;
+  transform: scaleX(-1);
+}
+
+/* Items float on top of the row-bg, padded to clear the border pillars */
+.wood-shelf-items {
+  position: relative;
+  display: grid;
+  width: 100%;
+  padding: 8px clamp(10px, 5.5vw, 46px) 10px clamp(10px, 5.5vw, 46px);
+  box-sizing: border-box;
+  align-items: end;
+  z-index: 5;
+}
+
+/* ============================================
+   Skeuomorphic Album Cover (Vinyl / CD / Tape)
+   ============================================ */
+
+.wood-album-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.wood-album-item:active {
+  transform: scale(0.96) translateY(2px);
+}
+
+/* Empty uniform slot */
+.wood-album-item--empty {
+  visibility: hidden;
+  pointer-events: none;
+  cursor: default;
+}
+
+.wood-cover-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 3px;
+  overflow: visible;
+  box-shadow:
+    2px 4px 8px rgba(0, 0, 0, 0.55),
+    0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* Vinyl Sleeve Card with clean edge & subtle depth */
+.wood-cover-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #1a1a1a;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+}
+
+.wood-cover-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Subtle, natural diagonal sheen (no harsh lines or edge artifacts) */
+.wood-cover-gloss {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.04) 30%,
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+/* Vinyl Peek-out disc animation - permanently peeking out for all vinyls */
+.wood-vinyl-disc {
+  position: absolute;
+  top: 4%;
+  right: 0%;
+  width: 92%;
+  height: 92%;
+  border-radius: 50%;
+  background: radial-gradient(circle at center,
+      #b30000 0%,
+      #b30000 18%,
+      #111 19%,
+      #1f1f1f 22%,
+      #111 25%,
+      #181818 50%,
+      #0c0c0c 70%,
+      #1a1a1a 95%,
+      #050505 100%);
+  z-index: -1;
+  box-shadow:
+    0 5px 12px rgba(0, 0, 0, 0.8),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateX(14px) rotate(8deg);
+}
+
+.wood-album-item:hover .wood-vinyl-disc,
+.wood-album-item:active .wood-vinyl-disc {
+  transform: translateX(22px) rotate(18deg);
+}
+
+/* Album Title / Artist plaque on the shelf */
+.wood-item-meta {
+  width: 100%;
+  margin-top: 5px;
+  text-align: center;
+  min-height: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.wood-item-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0 2px;
+  width: 100%;
+}
+
+.wood-item-artist {
+  font-size: 10px;
+  font-weight: 500;
+  color: #f7dfc0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 1px 0 0 0;
+  padding: 0 2px;
+}
+
+.wood-item-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffd8a8;
+  margin-top: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Adaptive sizing for denser grids (4 or 5 columns) */
+.wood-grid--dense .wood-item-title {
+  font-size: 10px;
+}
+
+.wood-grid--dense .wood-item-artist {
+  font-size: 9px;
+}
+
+.wood-grid--dense .wood-item-badge {
+  display: none;
+}
+
+/* Empty shelf state */
+.wood-empty-shelf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: #fae3c3;
+}
+
+.wood-empty-icon {
+  font-size: 44px;
+  margin-bottom: 12px;
+  opacity: 0.85;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+.wood-empty-title {
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  margin: 0 0 6px 0;
+}
+
+.wood-empty-desc {
+  font-size: 13px;
+  max-width: 280px;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  margin-bottom: 18px;
+}

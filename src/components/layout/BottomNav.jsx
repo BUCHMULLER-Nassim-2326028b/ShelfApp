@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Plus } from 'lucide-react';
+import { useShelf } from '../../context/ShelfContext';
 import './BottomNav.css';
 
 /* ============================================
@@ -48,6 +49,13 @@ const TABS = [
 export default function BottomNav() {
   const location = useLocation();
   const navigate = useNavigate();
+  const {
+    isAuthInitialized,
+    supabaseUser,
+    hasToken,
+    setIsAuthModalOpen,
+    setAuthModalMode,
+  } = useShelf();
   const navInnerRef = useRef(null);
   const pillRef = useRef(null);
 
@@ -380,6 +388,14 @@ export default function BottomNav() {
     const isAlreadyOnSearch = location.pathname.startsWith('/recherche');
     if (!isAlreadyOnSearch) {
       navigate('/recherche');
+    }
+
+    if (isAuthInitialized && !supabaseUser) {
+      localStorage.setItem('shelfapp_pending_discogs_after_auth', 'true');
+      setIsAuthModalOpen(true);
+    } else if (isAuthInitialized && supabaseUser && !hasToken) {
+      setAuthModalMode('discogs');
+      setIsAuthModalOpen(true);
     }
 
     const input = document.getElementById('discogs-search-input');

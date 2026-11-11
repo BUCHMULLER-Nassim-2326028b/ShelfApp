@@ -413,3 +413,86 @@
   border-color: rgba(0, 0, 0, 0.12);
   color: #000000;
 }
+
+[data-theme='light'] .album-modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.24);
+}
+
+[data-theme='light'] .album-modal-sheet {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.14);
+}
+
+[data-theme='light'] .album-modal-close {
+  background: #e5e5ea;
+}
+
+[data-theme='light'] .album-modal-close:active,
+[data-theme='light'] .album-modal-delete:active {
+  background: #d1d1d6;
+}
+
+[data-theme='light'] .album-modal-badge,
+[data-theme='light'] .album-format-chip {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+}
+
+[data-theme='light'] .album-modal-header-info,
+[data-theme='light'] .album-section-header {
+  color: var(--color-text-primary);
+}
+
+[data-theme='light'] .album-modal-title {
+  color: var(--color-text-primary);
+}
+
+[data-theme='light'] .album-modal-artist,
+[data-theme='light'] .album-section-header {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme='light'] .album-modal-cover-wrap {
+  background: var(--color-bg-tertiary);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme='light'] .album-modal-upload-btn {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+[data-theme='light'] .album-modal-upload-btn:hover {
+  background: #ffffff;
+}
+
+[data-theme='light'] .album-modal-pill {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+}
+
+[data-theme='light'] .album-modal-section {
+  background: var(--color-bg-primary);
+}
+
+[data-theme='light'] .album-track-row {
+  border-bottom-color: var(--color-border-light);
+}
+
+[data-theme='light'] .album-track-name {
+  color: var(--color-text-primary);
+}
+
+[data-theme='light'] .album-notes-textarea {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+[data-theme='light'] .album-save-notes-btn {
+  background: var(--color-text-primary);
+  color: var(--color-bg-secondary);
+  box-shadow: var(--shadow-sm);
+}

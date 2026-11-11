@@ -157,5 +157,5 @@
 /* Pinned state */
 .sound-button--pinned .sound-button__image-container {
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 1px var(--color-accent), 0 2px 8px rgba(33, 150, 243, 0.35);
+  box-shadow: 0 0 0 1px var(--color-accent);
 }

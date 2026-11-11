@@ -148,9 +148,6 @@
   bottom: -15px;
   border-radius: 50%;
   background: #ffedd5;
-  box-shadow: 
-    0 0 8px #f97316,
-    0 0 16px var(--anim-color-1, #ef4444);
   animation: animEmberFloat linear infinite;
   will-change: transform, opacity;
 }
@@ -263,12 +260,17 @@
   opacity: 0.6;
 }
 
+.anim-bg__embers-glow,
+.anim-bg__embers-heat,
+.anim-bg__particles-glow {
+  display: none;
+}
+
 .anim-bg__stardust {
   position: absolute;
   bottom: 0;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px var(--anim-color-1, #38bdf8);
   animation: animStardustFloat ease-in-out infinite alternate;
 }
 

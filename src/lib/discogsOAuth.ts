@@ -159,11 +159,10 @@ export async function handleDiscogsOAuthCallback(): Promise<{
 
       // Synchronisation avec le compte Supabase si l'utilisateur est connecté
       if (isSupabaseConfigured) {
-        supabase.auth.getUser().then(({ data: { user } }) => {
-          if (user?.id) {
-            saveUserDiscogsToken(user.id, finalToken, data.username || undefined).catch(() => {});
-          }
-        }).catch(() => {});
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user?.id) {
+          await saveUserDiscogsToken(user.id, finalToken, data.username || undefined);
+        }
       }
 
       return {

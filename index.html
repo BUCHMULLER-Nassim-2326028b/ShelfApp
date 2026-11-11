@@ -7,7 +7,7 @@
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>ShelfApp — Collection de Médias Physiques</title>
   <meta name="description" content="Votre collection de vinyles, CDs et cassettes dans une étagère skeuomorphique vintage connectée à Discogs." />
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#f2f2f7" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -19,6 +19,12 @@
 
 <body>
   <div id="root"></div>
+  <script>
+    const savedTheme = localStorage.getItem('shelfapp_theme');
+    const initialTheme = savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : 'light';
+    document.documentElement.dataset.theme = initialTheme;
+    document.documentElement.classList.add(`theme-${initialTheme}`);
+  </script>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

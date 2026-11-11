@@ -532,3 +532,76 @@
   to { transform: rotate(360deg); }
 }
 
+[data-theme='light'] .album-detail-page {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+[data-theme='light'] .album-detail-navbar {
+  background: rgba(242, 242, 247, 0.88);
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .album-nav-title,
+[data-theme='light'] .album-main-title,
+[data-theme='light'] .album-in-shelf-left strong,
+[data-theme='light'] .album-rating-label,
+[data-theme='light'] .album-track-title {
+  color: var(--color-text-primary);
+}
+
+[data-theme='light'] .album-nav-back-btn,
+[data-theme='light'] .album-nav-back-chevron,
+[data-theme='light'] .album-rating-text,
+[data-theme='light'] .album-track-pos {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme='light'] .album-main-artist,
+[data-theme='light'] .album-group-header,
+[data-theme='light'] .album-track-duration {
+  color: var(--color-text-secondary);
+}
+
+[data-theme='light'] .album-cover-container {
+  background: var(--color-bg-tertiary);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme='light'] .album-badge-pill,
+[data-theme='light'] .album-in-shelf-banner,
+[data-theme='light'] .album-detail-group,
+[data-theme='light'] .album-discogs-link-btn {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme='light'] .album-format-spec,
+[data-theme='light'] .album-genre-tag {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+}
+
+[data-theme='light'] .album-detail-group {
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme='light'] .album-rating-section,
+[data-theme='light'] .album-track-row {
+  border-color: var(--color-border-light);
+}
+
+[data-theme='light'] .album-notes-textarea {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+[data-theme='light'] .album-notes-save-btn,
+[data-theme='light'] .album-btn-add-shelf {
+  background: var(--color-text-primary);
+  color: var(--color-bg-secondary);
+  box-shadow: var(--shadow-sm);
+}

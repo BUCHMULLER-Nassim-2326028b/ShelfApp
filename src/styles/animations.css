@@ -29,15 +29,15 @@
 @keyframes soundPulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 var(--color-accent-glow);
+    box-shadow: none;
   }
   50% {
     transform: scale(0.92);
-    box-shadow: 0 0 0 8px transparent;
+    box-shadow: none;
   }
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 transparent;
+    box-shadow: none;
   }
 }
 

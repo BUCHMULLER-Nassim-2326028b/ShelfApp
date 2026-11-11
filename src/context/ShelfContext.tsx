@@ -38,8 +38,11 @@ interface ShelfContextType {
 
   // Supabase Auth & Cloud Sync
   supabaseUser: User | null;
+  isAuthInitialized: boolean;
   isAuthModalOpen: boolean;
   setIsAuthModalOpen: (open: boolean) => void;
+  authModalMode: 'account' | 'discogs';
+  setAuthModalMode: (mode: 'account' | 'discogs') => void;
   signInWithEmail: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   signUpWithEmail: (email: string, password: string) => Promise<{ success: boolean; error?: string; needConfirmation?: boolean }>;
   signOutSupabase: () => Promise<void>;
@@ -117,7 +120,9 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
 
   // Supabase Auth State
   const [supabaseUser, setSupabaseUser] = useState<User | null>(null);
+  const [isAuthInitialized, setIsAuthInitialized] = useState(!isSupabaseConfigured);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<'account' | 'discogs'>('account');
 
   // Refs to prevent circular sync loops and duplicate DB writes
   const collectionRef = useRef<NormalizedMediaItem[]>(collection);
@@ -137,7 +142,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
     } catch {
       /* ignore */
     }
-    return 'dark';
+    return 'light';
   });
 
   const [shelfStyle, setShelfStyle] = useState<'skeuomorphic' | 'modern'>(() => {
@@ -366,6 +371,7 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       const user = session?.user ?? null;
       setSupabaseUser(user);
+      setIsAuthInitialized(true);
       if (user) {
         syncCollectionWithCloud(user.id);
         checkUserDiscogsToken(user.id).then(({ hasToken, username }) => {
@@ -373,7 +379,9 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
           setDiscogsUsername(username);
         });
       }
-    }).catch(() => { });
+    }).catch(() => {
+      setIsAuthInitialized(true);
+    });
 
     // 2. Auth state subscription (only triggers on explicit sign in / sign out)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -760,6 +768,9 @@ export function ShelfProvider({ children }: { children: React.ReactNode }) {
         supabaseUser,
         isAuthModalOpen,
         setIsAuthModalOpen,
+        authModalMode,
+        setAuthModalMode,
+        isAuthInitialized,
         signInWithEmail,
         signUpWithEmail,
         signOutSupabase,

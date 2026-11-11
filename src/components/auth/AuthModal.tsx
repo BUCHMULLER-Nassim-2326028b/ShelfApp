@@ -12,7 +12,9 @@ import {
   AlertCircle,
   CheckCircle2,
   LogOut,
+  Disc,
 } from 'lucide-react';
+import { startDiscogsOAuth } from '../../lib/discogsOAuth';
 import './AuthModal.css';
 
 export const AuthModal: React.FC = () => {
@@ -23,6 +25,8 @@ export const AuthModal: React.FC = () => {
     signInWithEmail,
     signUpWithEmail,
     signOutSupabase,
+    authModalMode,
+    setAuthModalMode,
   } = useShelf();
 
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
@@ -46,6 +50,7 @@ export const AuthModal: React.FC = () => {
     setIsClosing(true);
     setTimeout(() => {
       setIsAuthModalOpen(false);
+      setAuthModalMode('account');
       setIsClosing(false);
       setDragY(0);
       setEmail('');
@@ -54,6 +59,13 @@ export const AuthModal: React.FC = () => {
       setErrorMessage(null);
       setSuccessMessage(null);
     }, 240);
+  };
+
+  const openPendingDiscogsModal = () => {
+    if (localStorage.getItem('shelfapp_pending_discogs_after_auth') !== 'true') return;
+    localStorage.removeItem('shelfapp_pending_discogs_after_auth');
+    setAuthModalMode('discogs');
+    setIsAuthModalOpen(true);
   };
 
   // Native back gesture to dismiss
@@ -130,6 +142,7 @@ export const AuthModal: React.FC = () => {
           setSuccessMessage('Connexion réussie.');
           setTimeout(() => {
             closeModal();
+            setTimeout(openPendingDiscogsModal, 260);
           }, 700);
         } else {
           setErrorMessage(result.error || 'Erreur lors de la connexion.');
@@ -145,6 +158,7 @@ export const AuthModal: React.FC = () => {
             setSuccessMessage('Compte créé avec succès.');
             setTimeout(() => {
               closeModal();
+              setTimeout(openPendingDiscogsModal, 260);
             }, 900);
           }
         } else {
@@ -156,6 +170,16 @@ export const AuthModal: React.FC = () => {
       setErrorMessage(msg);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDiscogsConnect = async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+    const result = await startDiscogsOAuth();
+    if (!result.success) {
+      setIsLoading(false);
+      setErrorMessage(result.error || 'Impossible de connecter Discogs.');
     }
   };
 
@@ -187,7 +211,11 @@ export const AuthModal: React.FC = () => {
           <div className="auth-sheet-handle" />
           <div className="auth-sheet-title-row">
             <h2 className="auth-sheet-title">
-              {supabaseUser ? 'Compte iShelf' : 'Compte et cloud'}
+              {authModalMode === 'discogs'
+                ? 'Connecter Discogs'
+                : supabaseUser
+                  ? 'Compte iShelf'
+                  : 'Compte et cloud'}
             </h2>
             <button
               type="button"
@@ -202,7 +230,45 @@ export const AuthModal: React.FC = () => {
 
         {/* Scrollable Sheet Body */}
         <div className="auth-sheet-body">
-          {supabaseUser ? (
+          {authModalMode === 'discogs' ? (
+            <>
+              <div className="auth-discogs-brand">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/it/e/e8/Discogs_logo.svg?utm_source=it.wikipedia.org&utm_campaign=index&utm_content=original"
+                  alt="Discogs"
+                />
+              </div>
+              <p className="auth-subtitle">
+                Associez votre compte Discogs pour rechercher et importer vos disques.
+              </p>
+
+              {errorMessage && (
+                <div className="auth-banner auth-banner--error">
+                  <AlertCircle size={18} style={{ flexShrink: 0, marginTop: '1px' }} />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+
+              <button
+                type="button"
+                className="auth-submit-btn"
+                onClick={() => void handleDiscogsConnect()}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 size={18} className="spin-animation" />
+                    <span>Connexion en cours...</span>
+                  </>
+                ) : (
+                  <>
+                    <Disc size={18} />
+                    <span>Se connecter à Discogs</span>
+                  </>
+                )}
+              </button>
+            </>
+          ) : supabaseUser ? (
             // Logged in state
             <>
               <p className="auth-subtitle">
@@ -218,7 +284,7 @@ export const AuthModal: React.FC = () => {
                     style={{
                       fontWeight: 600,
                       fontSize: '1rem',
-                      color: '#ffffff',
+                      color: 'var(--color-text-primary)',
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
@@ -229,7 +295,7 @@ export const AuthModal: React.FC = () => {
                   <div
                     style={{
                       fontSize: '0.82rem',
-                      color: '#30d158',
+                      color: 'var(--color-success)',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '5px',

@@ -128,7 +128,7 @@
   border-radius: 50%;
   border: 2.5px solid #ffffff;
   background: #38bdf8;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.8), 0 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   transition: transform 0.12s ease;
 }
@@ -147,7 +147,7 @@
   border-radius: 50%;
   border: 2.5px solid #ffffff;
   background: #38bdf8;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.8), 0 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   cursor: pointer;
 }
 
@@ -187,7 +187,6 @@
 .options-switch input:checked+.options-switch__track {
   background: #2563eb;
   border-color: #ffffff;
-  box-shadow: 0 0 12px rgba(37, 99, 235, 0.5);
 }
 
 .options-switch__thumb {

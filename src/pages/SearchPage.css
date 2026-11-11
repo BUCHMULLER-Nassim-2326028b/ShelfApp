@@ -58,7 +58,7 @@
 
 .ios-search-bar:focus-within {
   background-color: #242426;
-  box-shadow: inset 0 0 0 0.5px rgba(255, 176, 56, 0.4), 0 0 0 1px rgba(255, 176, 56, 0.2);
+  box-shadow: inset 0 0 0 0.5px rgba(255, 176, 56, 0.4);
 }
 
 .ios-search-icon {
@@ -947,7 +947,7 @@
   right: 0;
   height: 2px;
   background: #ff453a;
-  box-shadow: 0 0 8px #ff453a, 0 0 12px #ff453a;
+  box-shadow: none;
   animation: laserScan 2s ease-in-out infinite alternate;
 }
 

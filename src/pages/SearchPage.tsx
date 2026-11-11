@@ -72,6 +72,9 @@ export default function SearchPage() {
     importFromDiscogs,
     collection,
     hasToken,
+    supabaseUser,
+    setIsAuthModalOpen,
+    setAuthModalMode,
     discogsUsername,
     setSelectedItem,
   } = useShelf();
@@ -208,10 +211,53 @@ export default function SearchPage() {
 
   const rateLimit = getRateLimit();
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const requireDiscogsConnection = async (): Promise<boolean> => {
+    if (hasToken) return true;
+
+    localStorage.setItem(
+      'shelfapp_pending_search',
+      JSON.stringify({
+        query: searchQuery,
+        format: selectedFormat,
+        type: selectedType,
+      })
+    );
+
+    if (!supabaseUser) {
+      localStorage.setItem('shelfapp_pending_discogs_after_auth', 'true');
+      setIsAuthModalOpen(true);
+      return false;
+    }
+
+    setAuthModalMode('discogs');
+    setIsAuthModalOpen(true);
+    return false;
+  };
+
+  // Restore a search interrupted by the ShelfApp/Discogs authentication flow.
+  useEffect(() => {
+    if (!hasToken) return;
+    const pending = localStorage.getItem('shelfapp_pending_search');
+    if (!pending) return;
+
+    try {
+      const restored = JSON.parse(pending) as {
+        query?: string;
+        format?: string;
+        type?: string;
+      };
+      if (restored.query) setSearchQuery(restored.query);
+      if (restored.format !== undefined) setSelectedFormat(restored.format);
+      if (restored.type) setSelectedType(restored.type);
+      localStorage.removeItem('shelfapp_pending_search');
+    } catch {
+      localStorage.removeItem('shelfapp_pending_search');
+    }
+  }, [hasToken, setSearchQuery]);
 
   // Debounced auto-search when query or primary format changes
   useEffect(() => {
-    if (!searchQuery.trim()) return;
+    if (!searchQuery.trim() || !supabaseUser || !hasToken) return;
     const timer = setTimeout(() => {
       executeSearch(searchQuery, {
         format: selectedFormat || undefined,
@@ -219,7 +265,7 @@ export default function SearchPage() {
       });
     }, 400);
     return () => clearTimeout(timer);
-  }, [searchQuery, selectedFormat, selectedType, executeSearch]);
+  }, [searchQuery, selectedFormat, selectedType, executeSearch, hasToken, supabaseUser]);
 
   // Live Camera Barcode & QR Scanner using robust cross-platform ZXing engine
   useEffect(() => {
@@ -262,7 +308,9 @@ export default function SearchPage() {
                 }
                 closeBarcodeModal();
                 setSearchQuery(detectedValue);
-                executeSearch(detectedValue);
+                void requireDiscogsConnection().then((connected) => {
+                  if (connected) executeSearch(detectedValue);
+                });
               }
             }
           }
@@ -294,9 +342,13 @@ export default function SearchPage() {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      executeSearch(searchQuery, {
-        format: selectedFormat || undefined,
-        type: selectedType !== 'all' ? selectedType : undefined,
+      void requireDiscogsConnection().then((connected) => {
+        if (connected) {
+          executeSearch(searchQuery, {
+            format: selectedFormat || undefined,
+            type: selectedType !== 'all' ? selectedType : undefined,
+          });
+        }
       });
     }
   };
@@ -322,9 +374,13 @@ export default function SearchPage() {
     e.preventDefault();
     if (barcodeInput.trim()) {
       setSearchQuery(barcodeInput.trim());
-      executeSearch(barcodeInput.trim(), { format: selectedFormat || undefined });
-      setIsBarcodeModalOpen(false);
-      setBarcodeInput('');
+      void requireDiscogsConnection().then((connected) => {
+        if (connected) {
+          executeSearch(barcodeInput.trim(), { format: selectedFormat || undefined });
+          setIsBarcodeModalOpen(false);
+          setBarcodeInput('');
+        }
+      });
     }
   };
 
@@ -395,10 +451,10 @@ export default function SearchPage() {
         {!hasToken ? (
           <button
             type="button"
-            onClick={() => navigate('/options')}
+            onClick={() => void requireDiscogsConnection()}
             className="ios-auth-link"
           >
-            Connexion
+            {supabaseUser ? 'Connecter Discogs' : 'Créer un compte'}
           </button>
         ) : (
           <button
@@ -471,9 +527,9 @@ export default function SearchPage() {
           <button
             type="button"
             className="ios-auth-connect-btn"
-            onClick={() => navigate('/options')}
+            onClick={() => void requireDiscogsConnection()}
           >
-            Connecter mon compte Discogs
+            {supabaseUser ? 'Connecter mon compte Discogs' : 'Créer un compte ShelfApp'}
           </button>
         </div>
       ) : (

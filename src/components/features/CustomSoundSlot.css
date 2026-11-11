@@ -80,7 +80,6 @@
   justify-content: center;
   background: var(--color-accent);
   color: white;
-  box-shadow: 0 0 12px var(--color-accent-glow);
 }
 
 .custom-slot__name {

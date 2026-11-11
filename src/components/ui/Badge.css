@@ -20,13 +20,11 @@
 .badge--new {
   background: var(--color-new-badge);
   color: white;
-  box-shadow: 0 2px 8px rgba(229, 57, 53, 0.4);
 }
 
 .badge--accent {
   background: var(--color-accent);
   color: white;
-  box-shadow: 0 2px 8px var(--color-accent-glow);
 }
 
 .badge--version {

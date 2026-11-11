@@ -96,7 +96,7 @@ describe('ShelfContext', () => {
     const { result } = renderHook(() => useShelf(), { wrapper });
 
     // Defaults
-    expect(result.current.theme).toBe('dark');
+    expect(result.current.theme).toBe('light');
     expect(result.current.shelfStyle).toBe('skeuomorphic');
     expect(result.current.realisticSpineEnabled).toBe(true);
 
@@ -119,4 +119,3 @@ describe('ShelfContext', () => {
     expect(result.current.realisticSpineEnabled).toBe(false);
   });
 });
-

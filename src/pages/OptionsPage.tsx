@@ -7,14 +7,12 @@ import {
   BookOpen,
   ChevronRight,
   Smartphone,
-  Loader2,
   Sun,
   Moon,
   LayoutGrid,
   Info,
   Cloud,
 } from 'lucide-react';
-import { startDiscogsOAuth } from '../lib/discogsOAuth';
 import '../styles/ios-settings.css';
 
 export default function OptionsPage() {
@@ -33,19 +31,18 @@ export default function OptionsPage() {
     setRealisticSpineEnabled,
     supabaseUser,
     setIsAuthModalOpen,
+    setAuthModalMode,
   } = useShelf();
 
-  const [isOAuthLoading, setIsOAuthLoading] = useState(false);
-  const [oauthError, setOauthError] = useState<string | null>(null);
-
-  const handleOAuthConnect = async () => {
-    setIsOAuthLoading(true);
-    setOauthError(null);
-    const result = await startDiscogsOAuth();
-    if (!result.success) {
-      setIsOAuthLoading(false);
-      setOauthError(result.error || 'Impossible d’initialiser la connexion avec Discogs.');
+  const handleOAuthConnect = () => {
+    if (!supabaseUser) {
+      setAuthModalMode('account');
+      setIsAuthModalOpen(true);
+      return;
     }
+
+    setAuthModalMode('discogs');
+    setIsAuthModalOpen(true);
   };
 
   const handleDisconnect = async () => {
@@ -206,25 +203,10 @@ export default function OptionsPage() {
             type="button"
             className="ios-btn-primary"
             onClick={handleOAuthConnect}
-            disabled={isOAuthLoading}
           >
-            {isOAuthLoading ? (
-              <>
-                <Loader2 size={18} className="spin-animation" />
-                <span>Connexion à Discogs...</span>
-              </>
-            ) : (
-              <>
-                <Disc size={18} />
-                <span>Se connecter à Discogs</span>
-              </>
-            )}
+            <Disc size={18} />
+            <span>{supabaseUser ? 'Se connecter à Discogs' : 'Créer un compte ShelfApp'}</span>
           </button>
-        )}
-        {oauthError && (
-          <div className="ios-error-banner" style={{ marginTop: '10px' }}>
-            {oauthError}
-          </div>
         )}
       </div>
 

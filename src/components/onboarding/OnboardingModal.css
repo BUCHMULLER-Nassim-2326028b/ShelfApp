@@ -6,8 +6,10 @@
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background-color: #000000;
-  color: #ffffff;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(242, 242, 247, 0.98)),
+    var(--color-bg-primary);
+  color: var(--color-text-primary);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -22,18 +24,8 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-/* Ambient glow in background */
 .ios-onboarding-ambient {
-  position: absolute;
-  top: -15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 176, 56, 0.12) 0%, rgba(255, 176, 56, 0) 70%);
-  pointer-events: none;
-  filter: blur(60px);
+  display: none;
 }
 
 /* ── Top Bar with Skip ── */
@@ -54,7 +46,7 @@
   font-weight: 500;
   cursor: pointer;
   padding: 6px 12px;
-  border-radius: 999px;
+  border-radius: 16px;
   transition: all 0.15s ease;
 }
 
@@ -79,7 +71,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 28px;
+  padding: 0 24px;
   box-sizing: border-box;
   overflow-y: auto;
   scrollbar-width: none;
@@ -101,8 +93,8 @@
 
 .ios-onboarding-disc-wrapper {
   position: relative;
-  width: 110px;
-  height: 110px;
+  width: 124px;
+  height: 124px;
   border-radius: 50%;
   background: radial-gradient(circle at center,
     #ffb038 0%,
@@ -113,11 +105,17 @@
     #181818 55%,
     #0c0c0c 75%,
     #000 100%);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 176, 56, 0.25);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
+  border: 8px solid rgba(255, 255, 255, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
   animation: slowVinylSpin 20s linear infinite;
+}
+
+.ios-onboarding-disc-wrapper--discogs {
+  background: #d7d9de;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
 }
 
 @keyframes slowVinylSpin {
@@ -137,9 +135,15 @@
   box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.4);
 }
 
+.ios-onboarding-disc-center--discogs {
+  background: #0a84ff;
+  color: #ffffff;
+  box-shadow: none;
+}
+
 /* ── Titles ── */
 .ios-onboarding-title {
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 700;
   letter-spacing: -0.04em;
   color: #ffffff;
@@ -161,7 +165,7 @@
 .ios-onboarding-features {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   width: 100%;
   max-width: 360px;
   margin-bottom: 24px;
@@ -170,13 +174,18 @@
 .ios-onboarding-feature {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
   text-align: left;
 }
 
 .ios-onboarding-feature-badge {
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   border-radius: 11px;
   display: flex;
   align-items: center;
@@ -211,7 +220,8 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.75) 65%, rgba(0, 0, 0, 0) 100%);
+  background: rgba(255, 255, 255, 0.86);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   z-index: 10;
 }
 
@@ -235,7 +245,7 @@
 
 .ios-onboarding-dot--active {
   width: 22px;
-  background: #ffffff;
+  background: #111111;
 }
 
 /* ── Buttons ── */
@@ -246,7 +256,7 @@
   border-radius: 999px;
   background: #ffffff;
   border: none;
-  color: #000000;
+  color: #ffffff;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.2px;
@@ -255,7 +265,6 @@
   justify-content: center;
   gap: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
   transition: transform 0.15s ease, background 0.15s ease;
 }
 
@@ -283,13 +292,14 @@
 
 .ios-onboarding-btn-subtle:hover,
 .ios-onboarding-btn-subtle:active {
-  color: #d1d1d6;
+  color: #111111;
 }
 
 /* ── Light Mode Support ── */
 [data-theme='light'] .ios-onboarding-fullscreen {
-  background-color: #f2f2f7;
-  color: #000000;
+  background:
+    linear-gradient(145deg, #ffffff 0%, #f2f2f7 100%);
+  color: var(--color-text-primary);
 }
 
 [data-theme='light'] .ios-onboarding-title {
@@ -300,10 +310,28 @@
   color: #000000;
 }
 
+[data-theme='light'] .ios-onboarding-footer {
+  background: linear-gradient(to top, rgba(242, 242, 247, 0.98) 0%, rgba(242, 242, 247, 0.9) 65%, rgba(242, 242, 247, 0) 100%);
+}
+
+[data-theme='light'] .ios-onboarding-skip-link:hover,
+[data-theme='light'] .ios-onboarding-skip-link:active {
+  color: #000000;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='light'] .ios-onboarding-disc-wrapper {
+  background: radial-gradient(circle at center, #ffb038 0%, #ffb038 18%, #d1d1d6 19%, #e5e5ea 55%, #c7c7cc 100%);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+}
+
+[data-theme='light'] .ios-onboarding-disc-center {
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.12);
+}
+
 [data-theme='light'] .ios-onboarding-btn-primary {
-  background: #000000;
+  background: #111111;
   color: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 [data-theme='light'] .ios-onboarding-dot {
@@ -312,4 +340,52 @@
 
 [data-theme='light'] .ios-onboarding-dot--active {
   background: #000000;
+}
+
+[data-theme='light'] .ios-onboarding-feature {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='dark'] .ios-onboarding-fullscreen {
+  background: linear-gradient(145deg, #18181b 0%, #09090b 100%);
+  color: #ffffff;
+}
+
+[data-theme='dark'] .ios-onboarding-footer {
+  background: rgba(9, 9, 11, 0.92);
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .ios-onboarding-feature {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+[data-theme='dark'] .ios-onboarding-btn-primary {
+  background: #ffffff;
+  color: #111111;
+}
+
+[data-theme='light'] .ios-onboarding-subtitle,
+[data-theme='light'] .ios-onboarding-feature-desc,
+[data-theme='light'] .ios-onboarding-btn-subtle {
+  color: var(--color-text-secondary);
+}
+
+[data-theme='light'] .ios-onboarding-feature-badge {
+  color: #ffffff;
+}
+
+.ios-onboarding-error {
+  max-width: 360px;
+  margin: 0 0 16px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 69, 58, 0.3);
+  border-radius: 14px;
+  background: rgba(255, 69, 58, 0.12);
+  color: #ff453a;
+  font-size: 13px;
+  text-align: center;
 }

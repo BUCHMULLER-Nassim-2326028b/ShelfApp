@@ -1,4 +1,4 @@
-# 📀 ShelfApp
+# 📀 iShelf
 
 A mobile-first PWA to manage your physical music collection — vinyl, CDs, and cassettes — with a skeuomorphic iBooks-style shelf UI inspired by iOS aesthetics.
 
